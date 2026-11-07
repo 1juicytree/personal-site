@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Justin Smith - Personal Site</title>
+    <meta name="description" content="Personal website of Justin Smith - tech, gaming, basketball, and coding experiments.">
+    
+    <!-- Open Graph Metadata -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Justin Smith - Personal Site">
+    <meta property="og:description" content="Personal website of Justin Smith. California, US.">
+    
+    <!-- Distinct Font Combination: Space Grotesk + Space Mono + Newsreader -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Space+Grotesk:wght@500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+    <!-- Crisp Blue Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230047FF'/><text x='50%' y='65%' font-family='monospace' font-weight='700' font-size='54' fill='%23FFFFFF' text-anchor='middle'>JS</text></svg>">
+
+    <style>
+        :root {
+            /* Surfaces & Inks */
+            --bg-paper: #F8F9FA;
+            --bg-surface: #FFFFFF;
+            --bg-subtle: #F1F4F9;
+            --ink-primary: #0F172A;
+            --ink-secondary: #475569;
+            --ink-muted: #64748B;
+            
+            /* Vibrant Blue Palette */
+            --cobalt: #0047FF;
+            --cobalt-dark: #0036C8;
+            --cobalt-light: #3B82F6;
+            --cobalt-tint: #EEF4FF;
+            --cobalt-border: #BFDBFE;
+
+            /* Borders */
+            --border-hairline: #E2E8F0;
+            --border-heavy: #0F172A;
+
+            /* Typography */
+            --font-display: 'Space Grotesk', -apple-system, sans-serif;
+            --font-editorial: 'Newsreader', Georgia, serif;
+            --font-mono: 'Space Mono', SFMono-Regular, Menlo, monospace;
+        }
+
+        ::selection {
+            background-color: var(--cobalt);
+            color: #FFFFFF;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            border-radius: 0;
+            scroll-margin-top: 20px;
+        }
+
+        body {
+            background-color: var(--bg-paper);
+            color: var(--ink-primary);
+            font-family: var(--font-display);
+            font-size: 15px;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            letter-spacing: -0.015em;
+            border-top: 4px solid var(--cobalt);
+        }
+
+        /* Top Bar */
+        .topbar {
+            border-bottom: 1px solid var(--border-hairline);
+            background-color: var(--bg-surface);
+            font-family: var(--font-mono);
+            font-size: 12px;
+        }
+
+        .topbar-inner {
+            max-width: 1140px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr auto auto auto;
+            border-left: 1px solid var(--border-hairline);
+            border-right: 1px solid var(--border-hairline);
+        }
+
+        .topbar-cell {
+            padding: 12px 18px;
+            border-right: 1px solid var(--border-hairline);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--ink-secondary);
+        }
+
+        .topbar-cell:last-child {
+            border-right: none;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--cobalt);
+            box-shadow: 0 0 0 2px var(--cobalt-border);
+        }
+
+        /* Container */
+        .wrapper {
+            max-width: 1140px;
+            margin: 0 auto;
+            border-left: 1px solid var(--border-hairline);
+            border-right: 1px solid var(--border-hairline);
+            background-color: var(--bg-surface);
+        }
+
+        /* Asymmetrical Hero Section */
+        .hero {
+            display: grid;
+            grid-template-columns: 1.35fr 1fr;
+            border-bottom: 1px solid var(--border-hairline);
+        }
+
+        .hero-left {
+            padding: 52px;
+            border-right: 1px solid var(--border-hairline);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .tag-pill {
+            display: inline-block;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--cobalt);
+            background-color: var(--cobalt-tint);
+            border: 1px solid var(--cobalt-border);
+            padding: 4px 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 20px;
+            width: fit-content;
+        }
+
+        h1.hero-title {
+            font-size: 3.8rem;
+            line-height: 1;
+            letter-spacing: -0.04em;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--ink-primary);
+        }
+
+        h1.hero-title span.blue-dot {
+            color: var(--cobalt);
+        }
+
+        .hero-intro {
+            font-family: var(--font-editorial);
+            font-size: 1.5rem;
+            line-height: 1.4;
+            color: var(--ink-secondary);
+            margin-bottom: 36px;
+            font-style: italic;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 14px;
+            font-family: var(--font-mono);
+            font-size: 12px;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background-color: var(--cobalt);
+            color: #FFFFFF;
+            padding: 12px 20px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: background-color 0.15s ease;
+            border: 1px solid var(--cobalt);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--cobalt-dark);
+            border-color: var(--cobalt-dark);
+        }
+
+        .btn-outline {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background-color: transparent;
+            color: var(--ink-primary);
+            padding: 12px 20px;
+            text-decoration: none;
+            font-weight: 700;
+            border: 1px solid var(--border-heavy);
+            transition: all 0.15s ease;
+        }
+
+        .btn-outline:hover {
+            background-color: var(--ink-primary);
+            color: #FFFFFF;
+        }
+
+        /* Hero Right / Quick Facts Box */
+        .hero-right {
+            display: flex;
+            flex-direction: column;
+            background-color: #FAFAFB;
+        }
+
+        .facts-header {
+            padding: 16px 24px;
+            border-bottom: 1px solid var(--border-hairline);
+            border-top: 3px solid var(--cobalt);
+            font-family: var(--font-mono);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--cobalt);
+            font-weight: 700;
+            background-color: var(--cobalt-tint);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .facts-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        .facts-table tr {
+            border-bottom: 1px solid var(--border-hairline);
+            transition: background-color 0.15s ease;
+        }
+
+        .facts-table tr:hover {
+            background-color: var(--cobalt-tint);
+        }
+
+        .facts-table tr:last-child {
+            border-bottom: none;
+        }
+
+        .facts-table td {
+            padding: 16px 24px;
+            vertical-align: top;
+        }
+
+        .fact-key {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--ink-muted);
+            width: 36%;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .fact-val {
+            font-weight: 500;
+            color: var(--ink-primary);
+        }
+
+        .fact-val a {
+            color: var(--cobalt);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .fact-val a:hover {
+            text-decoration: underline;
+        }
+
+        /* Section Headings */
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 52px;
+            border-bottom: 1px solid var(--border-hairline);
+            background-color: var(--bg-paper);
+            border-left: 4px solid var(--cobalt);
+        }
+
+        .section-header-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--ink-primary);
+            letter-spacing: -0.02em;
+        }
+
+        .section-header-num {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--cobalt);
+            font-weight: 700;
+            background-color: var(--cobalt-tint);
+            padding: 2px 8px;
+            border: 1px solid var(--cobalt-border);
+        }
+
+        /* About Section */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1.1fr 1fr;
+            border-bottom: 1px solid var(--border-hairline);
+        }
+
+        .about-col {
+            padding: 44px 52px;
+        }
+
+        .about-col:first-child {
+            border-right: 1px solid var(--border-hairline);
+        }
+
+        .about-lead {
+            font-size: 1.15rem;
+            line-height: 1.6;
+            color: var(--ink-primary);
+            margin-bottom: 16px;
+            font-weight: 500;
+        }
+
+        .about-body {
+            color: var(--ink-secondary);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 16px;
+        }
+
+        .blue-callout {
+            background-color: var(--cobalt-tint);
+            border-left: 3px solid var(--cobalt);
+            padding: 16px 20px;
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: var(--ink-secondary);
+        }
+
+        .blue-callout strong {
+            color: var(--cobalt-dark);
+        }
+
+        /* Hobbies Grid */
+        .interests-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            border-bottom: 1px solid var(--border-hairline);
+        }
+
+        .interest-card {
+            padding: 38px 52px;
+            border-right: 1px solid var(--border-hairline);
+            border-bottom: 1px solid var(--border-hairline);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 220px;
+            background-color: var(--bg-surface);
+            transition: all 0.15s ease;
+            position: relative;
+        }
+
+        .interest-card:nth-child(2n) {
+            border-right: none;
+        }
+
+        .interest-card:nth-last-child(-n+2) {
+            border-bottom: none;
+        }
+
+        .interest-card:hover {
+            background-color: var(--cobalt-tint);
+        }
+
+        .interest-card:hover .interest-title {
+            color: var(--cobalt);
+        }
+
+        .interest-top {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            margin-bottom: 14px;
+        }
+
+        .interest-tag {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--cobalt);
+            text-transform: uppercase;
+        }
+
+        .interest-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 10px;
+            color: var(--ink-primary);
+            transition: color 0.15s ease;
+        }
+
+        .interest-desc {
+            color: var(--ink-secondary);
+            font-size: 0.94rem;
+            line-height: 1.6;
+            margin-bottom: 22px;
+        }
+
+        .tags-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            border-top: 1px solid var(--border-hairline);
+            padding-top: 16px;
+        }
+
+        .tag-chip {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--cobalt-dark);
+            background-color: var(--cobalt-tint);
+            border: 1px solid var(--cobalt-border);
+            padding: 3px 8px;
+            font-weight: 500;
+        }
+
+        /* Directory Table */
+        .directory-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+            border-bottom: 1px solid var(--border-hairline);
+        }
+
+        .directory-table th {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--ink-muted);
+            background-color: var(--bg-paper);
+            border-bottom: 1px solid var(--border-hairline);
+            border-right: 1px solid var(--border-hairline);
+            padding: 14px 28px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .directory-table th:last-child {
+            border-right: none;
+        }
+
+        .directory-table td {
+            padding: 18px 28px;
+            border-bottom: 1px solid var(--border-hairline);
+            border-right: 1px solid var(--border-hairline);
+            vertical-align: middle;
+        }
+
+        .directory-table td:last-child {
+            border-right: none;
+            text-align: right;
+        }
+
+        .directory-table tr:hover td {
+            background-color: var(--cobalt-tint);
+        }
+
+        .dir-platform {
+            font-weight: 600;
+            color: var(--ink-primary);
+        }
+
+        .dir-handle {
+            font-family: var(--font-mono);
+            font-size: 13px;
+            color: var(--ink-secondary);
+        }
+
+        .btn-small {
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-heavy);
+            padding: 6px 14px;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--ink-primary);
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.15s ease;
+        }
+
+        .btn-small:hover {
+            background-color: var(--cobalt);
+            border-color: var(--cobalt);
+            color: #FFFFFF;
+        }
+
+        .btn-small.blue-fill {
+            background-color: var(--cobalt);
+            border-color: var(--cobalt);
+            color: #FFFFFF;
+        }
+
+        .btn-small.blue-fill:hover {
+            background-color: var(--cobalt-dark);
+            border-color: var(--cobalt-dark);
+        }
+
+        /* Bottom Blue Banner */
+        .contact-banner {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            align-items: center;
+            gap: 24px;
+            padding: 44px 52px;
+            background-color: var(--cobalt);
+            color: #FFFFFF;
+            border-bottom: 1px solid var(--border-hairline);
+        }
+
+        .contact-banner h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 6px;
+        }
+
+        .contact-banner p {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 0.95rem;
+        }
+
+        .btn-banner {
+            display: inline-block;
+            background-color: #FFFFFF;
+            color: var(--cobalt);
+            padding: 14px 24px;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            font-weight: 700;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: all 0.15s ease;
+            white-space: nowrap;
+        }
+
+        .btn-banner:hover {
+            background-color: #0F172A;
+            color: #FFFFFF;
+        }
+
+        /* Footer */
+        footer {
+            padding: 32px 52px;
+            background-color: var(--bg-paper);
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--ink-muted);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        footer a {
+            color: var(--cobalt);
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Toast Feedback */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background-color: var(--ink-primary);
+            color: #FFFFFF;
+            padding: 12px 20px;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            border-left: 4px solid var(--cobalt);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 1000;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            pointer-events: none;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+        }
+
+        .toast.active {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 880px) {
+            .topbar-inner {
+                grid-template-columns: 1fr auto;
+            }
+            .topbar-cell:nth-child(3),
+            .topbar-cell:nth-child(4) {
+                display: none;
+            }
+            .hero {
+                grid-template-columns: 1fr;
+            }
+            .hero-left {
+                border-right: none;
+                border-bottom: 1px solid var(--border-hairline);
+                padding: 36px 24px;
+            }
+            h1.hero-title {
+                font-size: 2.8rem;
+            }
+            .section-header {
+                padding: 16px 24px;
+            }
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+            .about-col:first-child {
+                border-right: none;
+                border-bottom: 1px solid var(--border-hairline);
+            }
+            .about-col {
+                padding: 32px 24px;
+            }
+            .interests-grid {
+                grid-template-columns: 1fr;
+            }
+            .interest-card {
+                border-right: none !important;
+                padding: 32px 24px;
+            }
+            .directory-table {
+                display: block;
+                overflow-x: auto;
+            }
+            .contact-banner {
+                grid-template-columns: 1fr;
+                padding: 32px 24px;
+            }
+            footer {
+                flex-direction: column;
+                gap: 12px;
+                padding: 28px 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Status Bar -->
+    <header class="topbar">
+        <div class="topbar-inner">
+            <div class="topbar-cell">
+                <span class="status-dot"></span>
+                <span style="font-weight: 700; color: var(--ink-primary);">Justin Smith</span>
+                <span>/ Personal Site</span>
+            </div>
+            <div class="topbar-cell">
+                <span>California, USA</span>
+            </div>
+            <div class="topbar-cell">
+                <span id="liveClock" style="color: var(--cobalt); font-weight: 700;">00:00:00 PST</span>
+            </div>
+            <div class="topbar-cell">
+                <span>2026</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="wrapper">
+        <!-- Asymmetrical Hero Section -->
+        <section class="hero">
+            <div class="hero-left">
+                <div>
+                    <span class="tag-pill">Personal Website</span>
+                    <h1 class="hero-title">Justin Smith<span class="blue-dot">.</span></h1>
+                    <p class="hero-intro">
+                        Hi! I'm Justin. I'm into technology, gaming, and playing basketball out in California. Welcome to my little website.
+                    </p>
+                </div>
+                <div class="hero-actions">
+                    <a href="#contact" class="btn-primary">Get In Touch &rarr;</a>
+                    <a href="#about" class="btn-outline">About Me &darr;</a>
+                </div>
+            </div>
+
+            <!-- Quick Facts Sidebar -->
+            <div class="hero-right">
+                <div class="facts-header">
+                    <span>Quick Facts</span>
+                    <span>[01]</span>
+                </div>
+                <table class="facts-table">
+                    <tr>
+                        <td class="fact-key">Location</td>
+                        <td class="fact-val">California (Pacific Time)</td>
+                    </tr>
+                    <tr>
+                        <td class="fact-key">Interests</td>
+                        <td class="fact-val">Tech, PC hardware, web projects</td>
+                    </tr>
+                    <tr>
+                        <td class="fact-key">Active Games</td>
+                        <td class="fact-val">Minecraft &bull; V Rising</td>
+                    </tr>
+                    <tr>
+                        <td class="fact-key">Sport</td>
+                        <td class="fact-val">Basketball 🏀</td>
+                    </tr>
+                    <tr>
+                        <td class="fact-key">Favorite Shows</td>
+                        <td class="fact-val">Teen Wolf &bull; The Vampire Diaries</td>
+                    </tr>
+                    <tr>
+                        <td class="fact-key">GitHub</td>
+                        <td class="fact-val"><a href="https://github.com/1juicytree" target="_blank" rel="noopener noreferrer">@1juicytree &nearr;</a></td>
+                    </tr>
+                    <tr>
+                        <td class="fact-key">Twitter / X</td>
+                        <td class="fact-val"><a href="https://twitter.com/1juicytree" target="_blank" rel="noopener noreferrer">@1juicytree &nearr;</a></td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+
+        <!-- Section 01: About Me -->
+        <div class="section-header" id="about">
+            <span class="section-header-title">About Me</span>
+            <span class="section-header-num">01</span>
+        </div>
+
+        <section class="about-grid">
+            <div class="about-col">
+                <p class="about-lead">
+                    I threw this site together to have a clean, straightforward place to showcase a little about me.
+                </p>
+                <p class="about-body">
+                    I've been hooked on technology for as long as I can remember. Lately, that looks like following new PC hardware drops, experimenting with new apps/products, and hacking away at random web projects to see what I can build.
+                </p>
+            </div>
+            <div class="about-col">
+                <p class="about-lead">
+                    When I step away from the keyboard, I try to keep things active.
+                </p>
+                <p class="about-body">
+                    Basketball is my main reset button. I've always enjoyed getting shots up until sunset. If I'm staying in, you'll usually catch me on Discord running co-op sessions with friends or rewatching Teen Wolf and Vampire Diaries for the tenth time.
+                </p>
+                <div class="blue-callout">
+                    <strong>Right now:</strong> Hooping on weekends, testing developer tools, and building in Minecraft.
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 02: Hobbies & Interests -->
+        <div class="section-header" id="interests">
+            <span class="section-header-title">Hobbies & What I Do</span>
+            <span class="section-header-num">02</span>
+        </div>
+
+        <section class="interests-grid">
+            <!-- Basketball -->
+            <div class="interest-card">
+                <div>
+                    <div class="interest-top">
+                        <span class="interest-tag">Athletics</span>
+                        <span style="font-size: 1.25rem;">🏀</span>
+                    </div>
+                    <h3 class="interest-title">Basketball</h3>
+                    <p class="interest-desc">
+                        I try to hoop whenever I get some free time. Whether it's going out with friends to play or just shooting around by myself, it's easily my favorite way to stay active and clear my head.
+                    </p>
+                </div>
+                <div class="tags-row">
+                    <span class="tag-chip">Pickup Games</span>
+                    <span class="tag-chip">Half-Court</span>
+                    <span class="tag-chip">Cardio</span>
+                </div>
+            </div>
+
+            <!-- Video Games -->
+            <div class="interest-card">
+                <div>
+                    <div class="interest-top">
+                        <span class="interest-tag">Gaming</span>
+                        <span style="font-size: 1.25rem;">🎮</span>
+                    </div>
+                    <h3 class="interest-title">Minecraft & V Rising</h3>
+                    <p class="interest-desc">
+                        I'm a huge fan of survival and sandbox games. There's something really satisfying about spending hours building massive bases in Minecraft or grinding out boss fights in V Rising with friends.
+                    </p>
+                </div>
+                <div class="tags-row">
+                    <span class="tag-chip">Minecraft</span>
+                    <span class="tag-chip">V Rising</span>
+                    <span class="tag-chip">Co-op</span>
+                </div>
+            </div>
+
+            <!-- Shows & Series -->
+            <div class="interest-card">
+                <div>
+                    <div class="interest-top">
+                        <span class="interest-tag">Shows & Series</span>
+                        <span style="font-size: 1.25rem;">📺</span>
+                    </div>
+                    <h3 class="interest-title">Supernatural Drama</h3>
+                    <p class="interest-desc">
+                        Guilty as charged. I love binge-worthy supernatural mysteries and teen drama. Teen Wolf and The Vampire Diaries are prime TV for me, and I'll gladly rewatch entire seasons.
+                    </p>
+                </div>
+                <div class="tags-row">
+                    <span class="tag-chip">Teen Wolf</span>
+                    <span class="tag-chip">The Vampire Diaries</span>
+                    <span class="tag-chip">Mystery</span>
+                </div>
+            </div>
+
+            <!-- Tech & Gadgets -->
+            <div class="interest-card">
+                <div>
+                    <div class="interest-top">
+                        <span class="interest-tag">Tinkering</span>
+                        <span style="font-size: 1.25rem;">⚡</span>
+                    </div>
+                    <h3 class="interest-title">Tech & Gadgets</h3>
+                    <p class="interest-desc">
+                        Always curious about new hardware, testing AI tools, and tinkering with little web projects like this one. If there's a new gadget or tool worth checking out, I'm probably looking into it.
+                    </p>
+                </div>
+                <div class="tags-row">
+                    <span class="tag-chip">Hardware</span>
+                    <span class="tag-chip">AI Tools</span>
+                    <span class="tag-chip">Web Dev</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 03: Contact Directory -->
+        <div class="section-header" id="contact">
+            <span class="section-header-title">Connect & Contact Info</span>
+            <span class="section-header-num">03</span>
+        </div>
+
+        <table class="directory-table">
+            <thead>
+                <tr>
+                    <th style="width: 25%;">Platform</th>
+                    <th style="width: 45%;">Details</th>
+                    <th style="width: 30%;">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="dir-platform">Email</td>
+                    <td class="dir-handle">1justin.josephsmith@gmail.com</td>
+                    <td>
+                        <button class="btn-small" onclick="copySnippet('1justin.josephsmith@gmail.com', 'Email', event)">Copy</button>
+                        <a href="mailto:1justin.josephsmith@gmail.com" class="btn-small blue-fill">Send Email &rarr;</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="dir-platform">Phone</td>
+                    <td class="dir-handle">(559) 223-8292</td>
+                    <td>
+                        <button class="btn-small" onclick="copySnippet('(559)-223-8292', 'Phone', event)">Copy Phone</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="dir-platform">Discord</td>
+                    <td class="dir-handle">1juicytree</td>
+                    <td>
+                        <button class="btn-small" onclick="copySnippet('1juicytree', 'Discord', event)">Copy Tag</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="dir-platform">GitHub</td>
+                    <td class="dir-handle">github.com/1juicytree</td>
+                    <td>
+                        <a href="https://github.com/1juicytree" target="_blank" rel="noopener noreferrer" class="btn-small">Visit Profile &nearr;</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="dir-platform">Twitter / X</td>
+                    <td class="dir-handle">twitter.com/1juicytree (@1juicytree)</td>
+                    <td>
+                        <a href="https://twitter.com/1juicytree" target="_blank" rel="noopener noreferrer" class="btn-small">Visit Profile &nearr;</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Vibrant Blue Contact Banner -->
+        <div class="contact-banner">
+            <div>
+                <h3>Want to chat or collaborate?</h3>
+                <p>Feel free to reach out if you want to talk about tech, team up in a game, or just say hello.</p>
+            </div>
+            <div>
+                <a href="mailto:1justin.josephsmith@gmail.com?subject=Hello%20Justin!" class="btn-banner">
+                    Drop Me an Email &rarr;
+                </a>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <div>&copy; 2026 Justin Smith &bull; Built with HTML & CSS</div>
+            <div><a href="#">Back to top &uarr;</a></div>
+        </footer>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="toast">
+        <span id="toastMessage">Copied to clipboard!</span>
+    </div>
+
+    <script>
+        // Live California Time Clock
+        function updateClock() {
+            const clockEl = document.getElementById('liveClock');
+            if (!clockEl) return;
+            const now = new Date();
+            const options = {
+                timeZone: 'America/Los_Angeles',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
+            };
+            const formatter = new Intl.DateTimeFormat([], options);
+            clockEl.textContent = formatter.format(now) + ' PST';
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // Copy Helper with In-Button and Toast Feedback
+        function copySnippet(text, label, event) {
+            const btn = event ? event.currentTarget || event.target : null;
+            const originalText = btn ? btn.textContent : '';
+
+            navigator.clipboard.writeText(text).then(() => {
+                showToast(`Copied ${label}: ${text}`);
+                if (btn && btn.tagName === 'BUTTON') {
+                    btn.textContent = 'Copied! ✓';
+                    btn.style.backgroundColor = 'var(--cobalt)';
+                    btn.style.color = '#FFFFFF';
+                    setTimeout(() => {
+                        btn.textContent = originalText;
+                        btn.style.backgroundColor = '';
+                        btn.style.color = '';
+                    }, 1400);
+                }
+            }).catch(() => {
+                const ta = document.createElement('textarea');
+                ta.value = text;
+                document.body.appendChild(ta);
+                ta.select();
+                document.execCommand('copy');
+                document.body.removeChild(ta);
+                showToast(`Copied ${label}`);
+            });
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            toastMessage.textContent = msg;
+            toast.classList.add('active');
+            setTimeout(() => {
+                toast.classList.remove('active');
+            }, 2400);
+        }
+    </script>
+</body>
+</html>
