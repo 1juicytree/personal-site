@@ -3,14 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <meta name="text-scale" content="scale">
     <title>Justin Smith - Personal Site</title>
     <meta name="description" content="Personal website of Justin Smith - tech, gaming, basketball, and coding experiments.">
-    
+
     <!-- Open Graph Metadata -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="Justin Smith - Personal Site">
     <meta property="og:description" content="Personal website of Justin Smith. California, US.">
-    
+
     <!-- Distinct Font Combination: Space Grotesk + Space Mono + Newsreader -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,658 +22,1171 @@
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230047FF'/><text x='50%' y='65%' font-family='monospace' font-weight='700' font-size='54' fill='%23FFFFFF' text-anchor='middle'>JS</text></svg>">
 
     <style>
-        :root {
-            /* Surfaces & Inks */
-            --bg-paper: #F8F9FA;
-            --bg-surface: #FFFFFF;
-            --bg-subtle: #F1F4F9;
-            --ink-primary: #0F172A;
-            --ink-secondary: #475569;
-            --ink-muted: #64748B;
-            
-            /* Vibrant Blue Palette */
-            --cobalt: #0047FF;
-            --cobalt-dark: #0036C8;
-            --cobalt-light: #3B82F6;
-            --cobalt-tint: #EEF4FF;
-            --cobalt-border: #BFDBFE;
+        @layer reset, tokens, base, layout, components, utilities;
+
+        @layer tokens {
+            :root {
+                color-scheme: light dark;
+
+                /* Light palette tokens */
+                --bg-paper-light: #F8F9FA;
+                --bg-surface-light: #FFFFFF;
+                --bg-subtle-light: #FAFAFB;
+                --ink-primary-light: #0F172A;
+                --ink-secondary-light: #475569;
+                --ink-muted-light: #526075;
+                --cobalt-light-mode: #0047FF;
+                --cobalt-dark-light-mode: #0036C8;
+                --cobalt-fill-light: #0047FF;
+                --cobalt-fill-hover-light: #0036C8;
+                --cobalt-tint-light: #EEF4FF;
+                --cobalt-border-light: #BFDBFE;
+                --border-hairline-light: #E2E8F0;
+                --border-heavy-light: #0F172A;
+                --toast-bg-light: #0F172A;
+                --toast-ink-light: #FFFFFF;
+                --banner-btn-bg-light: #FFFFFF;
+                --banner-btn-ink-light: #0047FF;
+                --banner-btn-hover-bg-light: #0F172A;
+                --banner-btn-hover-ink-light: #FFFFFF;
+                --scrollbar-track-light: #F1F5F9;
+                --scrollbar-thumb-light: #64748B;
+
+                /* Dark palette tokens */
+                --bg-paper-dark: #0B1120;
+                --bg-surface-dark: #0F172A;
+                --bg-subtle-dark: #162033;
+                --ink-primary-dark: #F1F5F9;
+                --ink-secondary-dark: #CBD5E1;
+                --ink-muted-dark: #94A3B8;
+                --cobalt-dark-mode: #60A5FA;
+                --cobalt-dark-dark-mode: #93C5FD;
+                --cobalt-fill-dark: #2563EB;
+                --cobalt-fill-hover-dark: #1D4ED8;
+                --cobalt-tint-dark: #172554;
+                --cobalt-border-dark: #1E40AF;
+                --border-hairline-dark: #1E293B;
+                --border-heavy-dark: #94A3B8;
+                --toast-bg-dark: #1E293B;
+                --toast-ink-dark: #F8FAFC;
+                --banner-btn-bg-dark: #FFFFFF;
+                --banner-btn-ink-dark: #1D4ED8;
+                --banner-btn-hover-bg-dark: #0F172A;
+                --banner-btn-hover-ink-dark: #FFFFFF;
+                --scrollbar-track-dark: #0F172A;
+                --scrollbar-thumb-dark: #64748B;
+
+                /* Semantic tokens (light default + prefers-color-scheme fallback) */
+                --bg-paper: var(--bg-paper-light);
+                --bg-surface: var(--bg-surface-light);
+                --bg-subtle: var(--bg-subtle-light);
+                --ink-primary: var(--ink-primary-light);
+                --ink-secondary: var(--ink-secondary-light);
+                --ink-muted: var(--ink-muted-light);
+                --cobalt: var(--cobalt-light-mode);
+                --cobalt-dark: var(--cobalt-dark-light-mode);
+                --cobalt-fill: var(--cobalt-fill-light);
+                --cobalt-fill-hover: var(--cobalt-fill-hover-light);
+                --cobalt-tint: var(--cobalt-tint-light);
+                --cobalt-border: var(--cobalt-border-light);
+                --border-hairline: var(--border-hairline-light);
+                --border-heavy: var(--border-heavy-light);
+                --toast-bg: var(--toast-bg-light);
+                --toast-ink: var(--toast-ink-light);
+                --banner-btn-bg: var(--banner-btn-bg-light);
+                --banner-btn-ink: var(--banner-btn-ink-light);
+                --banner-btn-hover-bg: var(--banner-btn-hover-bg-light);
+                --banner-btn-hover-ink: var(--banner-btn-hover-ink-light);
+                --scrollbar-track: var(--scrollbar-track-light);
+                --scrollbar-thumb: var(--scrollbar-thumb-light);
+                --on-cobalt: #FFFFFF;
+                --on-cobalt-muted: rgb(255 255 255 / 0.92);
+
+                @media (prefers-color-scheme: dark) {
+                    --bg-paper: var(--bg-paper-dark);
+                    --bg-surface: var(--bg-surface-dark);
+                    --bg-subtle: var(--bg-subtle-dark);
+                    --ink-primary: var(--ink-primary-dark);
+                    --ink-secondary: var(--ink-secondary-dark);
+                    --ink-muted: var(--ink-muted-dark);
+                    --cobalt: var(--cobalt-dark-mode);
+                    --cobalt-dark: var(--cobalt-dark-dark-mode);
+                    --cobalt-fill: var(--cobalt-fill-dark);
+                    --cobalt-fill-hover: var(--cobalt-fill-hover-dark);
+                    --cobalt-tint: var(--cobalt-tint-dark);
+                    --cobalt-border: var(--cobalt-border-dark);
+                    --border-hairline: var(--border-hairline-dark);
+                    --border-heavy: var(--border-heavy-dark);
+                    --toast-bg: var(--toast-bg-dark);
+                    --toast-ink: var(--toast-ink-dark);
+                    --banner-btn-bg: var(--banner-btn-bg-dark);
+                    --banner-btn-ink: var(--banner-btn-ink-dark);
+                    --banner-btn-hover-bg: var(--banner-btn-hover-bg-dark);
+                    --banner-btn-hover-ink: var(--banner-btn-hover-ink-dark);
+                    --scrollbar-track: var(--scrollbar-track-dark);
+                    --scrollbar-thumb: var(--scrollbar-thumb-dark);
+                }
+
+                @supports (color: light-dark(white, black)) {
+                    --bg-paper: light-dark(var(--bg-paper-light), var(--bg-paper-dark));
+                    --bg-surface: light-dark(var(--bg-surface-light), var(--bg-surface-dark));
+                    --bg-subtle: light-dark(var(--bg-subtle-light), var(--bg-subtle-dark));
+                    --ink-primary: light-dark(var(--ink-primary-light), var(--ink-primary-dark));
+                    --ink-secondary: light-dark(var(--ink-secondary-light), var(--ink-secondary-dark));
+                    --ink-muted: light-dark(var(--ink-muted-light), var(--ink-muted-dark));
+                    --cobalt: light-dark(var(--cobalt-light-mode), var(--cobalt-dark-mode));
+                    --cobalt-dark: light-dark(var(--cobalt-dark-light-mode), var(--cobalt-dark-dark-mode));
+                    --cobalt-fill: light-dark(var(--cobalt-fill-light), var(--cobalt-fill-dark));
+                    --cobalt-fill-hover: light-dark(var(--cobalt-fill-hover-light), var(--cobalt-fill-hover-dark));
+                    --cobalt-tint: light-dark(var(--cobalt-tint-light), var(--cobalt-tint-dark));
+                    --cobalt-border: light-dark(var(--cobalt-border-light), var(--cobalt-border-dark));
+                    --border-hairline: light-dark(var(--border-hairline-light), var(--border-hairline-dark));
+                    --border-heavy: light-dark(var(--border-heavy-light), var(--border-heavy-dark));
+                    --toast-bg: light-dark(var(--toast-bg-light), var(--toast-bg-dark));
+                    --toast-ink: light-dark(var(--toast-ink-light), var(--toast-ink-dark));
+                    --banner-btn-bg: light-dark(var(--banner-btn-bg-light), var(--banner-btn-bg-dark));
+                    --banner-btn-ink: light-dark(var(--banner-btn-ink-light), var(--banner-btn-ink-dark));
+                    --banner-btn-hover-bg: light-dark(var(--banner-btn-hover-bg-light), var(--banner-btn-hover-bg-dark));
+                    --banner-btn-hover-ink: light-dark(var(--banner-btn-hover-ink-light), var(--banner-btn-hover-ink-dark));
+                    --scrollbar-track: light-dark(var(--scrollbar-track-light), var(--scrollbar-track-dark));
+                    --scrollbar-thumb: light-dark(var(--scrollbar-thumb-light), var(--scrollbar-thumb-dark));
+                }
+
+                /* Typography */
+                --font-display: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+                --font-editorial: 'Newsreader', Georgia, serif;
+                --font-mono: 'Space Mono', SFMono-Regular, Menlo, monospace;
+
+                /* Browser UI theming */
+                accent-color: var(--cobalt-fill);
+                scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+            }
+
+            @supports not (scrollbar-color: auto) {
+                ::-webkit-scrollbar {
+                    width: 12px;
+                    height: 12px;
+                }
+
+                ::-webkit-scrollbar-thumb {
+                    background: var(--scrollbar-thumb);
+                }
+
+                ::-webkit-scrollbar-track {
+                    background: var(--scrollbar-track);
+                }
+            }
+        }
+
+        @layer reset {
+            html {
+                box-sizing: border-box;
+            }
+
+            body,
+            header,
+            main,
+            section,
+            aside,
+            footer,
+            div,
+            h1,
+            h2,
+            h3,
+            p,
+            ul,
+            li,
+            table,
+            thead,
+            tbody,
+            tr,
+            th,
+            td,
+            a,
+            button {
+                box-sizing: inherit;
+            }
+
+            body,
+            h1,
+            h2,
+            h3,
+            p,
+            ul,
+            button {
+                margin: 0;
+                padding: 0;
+            }
+
+            ul {
+                list-style: none;
+            }
+
+            button {
+                font: inherit;
+                color: inherit;
+                background: transparent;
+                border: 0;
+            }
+        }
+
+        @layer base {
+            html {
+                @media (prefers-reduced-motion: no-preference) {
+                    scroll-behavior: smooth;
+                }
+            }
+
+            ::selection {
+                background-color: var(--cobalt-fill);
+                color: var(--on-cobalt);
+            }
+
+            body {
+                background-color: var(--bg-paper);
+                color: var(--ink-primary);
+                font-family: var(--font-display);
+                font-size: 0.9375rem;
+                line-height: 1.6;
+                text-align: start;
+                overflow-wrap: break-word;
+                -webkit-font-smoothing: antialiased;
+                letter-spacing: -0.015em;
+                border-block-start: 4px solid var(--cobalt-fill);
+            }
+
+            :where(h1, h2, h3, th) {
+                text-wrap: balance;
+            }
+
+            :where(p) {
+                text-wrap: pretty;
+            }
+
+            :where([id]) {
+                scroll-margin-block-start: 1.25rem;
+            }
+
+            :where(a:any-link, button, [tabindex]):focus-visible {
+                outline: 2px solid var(--cobalt);
+                outline-offset: 3px;
+            }
+        }
+
+        @layer layout {
+            /* Top Bar */
+            .topbar {
+                border-block-end: 1px solid var(--border-hairline);
+                background-color: var(--bg-surface);
+                font-family: var(--font-mono);
+                font-size: 0.75rem;
+                container-type: inline-size;
+                container-name: topbar;
+            }
 
-            /* Borders */
-            --border-hairline: #E2E8F0;
-            --border-heavy: #0F172A;
-
-            /* Typography */
-            --font-display: 'Space Grotesk', -apple-system, sans-serif;
-            --font-editorial: 'Newsreader', Georgia, serif;
-            --font-mono: 'Space Mono', SFMono-Regular, Menlo, monospace;
-        }
-
-        ::selection {
-            background-color: var(--cobalt);
-            color: #FFFFFF;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            border-radius: 0;
-            scroll-margin-top: 20px;
-        }
-
-        body {
-            background-color: var(--bg-paper);
-            color: var(--ink-primary);
-            font-family: var(--font-display);
-            font-size: 15px;
-            line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
-            letter-spacing: -0.015em;
-            border-top: 4px solid var(--cobalt);
-        }
-
-        /* Top Bar */
-        .topbar {
-            border-bottom: 1px solid var(--border-hairline);
-            background-color: var(--bg-surface);
-            font-family: var(--font-mono);
-            font-size: 12px;
-        }
-
-        .topbar-inner {
-            max-width: 1140px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr auto auto auto;
-            border-left: 1px solid var(--border-hairline);
-            border-right: 1px solid var(--border-hairline);
-        }
-
-        .topbar-cell {
-            padding: 12px 18px;
-            border-right: 1px solid var(--border-hairline);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: var(--ink-secondary);
-        }
-
-        .topbar-cell:last-child {
-            border-right: none;
-        }
-
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            background-color: var(--cobalt);
-            box-shadow: 0 0 0 2px var(--cobalt-border);
-        }
-
-        /* Container */
-        .wrapper {
-            max-width: 1140px;
-            margin: 0 auto;
-            border-left: 1px solid var(--border-hairline);
-            border-right: 1px solid var(--border-hairline);
-            background-color: var(--bg-surface);
-        }
-
-        /* Asymmetrical Hero Section */
-        .hero {
-            display: grid;
-            grid-template-columns: 1.35fr 1fr;
-            border-bottom: 1px solid var(--border-hairline);
-        }
-
-        .hero-left {
-            padding: 52px;
-            border-right: 1px solid var(--border-hairline);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .tag-pill {
-            display: inline-block;
-            font-family: var(--font-mono);
-            font-size: 11px;
-            color: var(--cobalt);
-            background-color: var(--cobalt-tint);
-            border: 1px solid var(--cobalt-border);
-            padding: 4px 10px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 20px;
-            width: fit-content;
-        }
-
-        h1.hero-title {
-            font-size: 3.8rem;
-            line-height: 1;
-            letter-spacing: -0.04em;
-            font-weight: 700;
-            margin-bottom: 20px;
-            color: var(--ink-primary);
-        }
-
-        h1.hero-title span.blue-dot {
-            color: var(--cobalt);
-        }
-
-        .hero-intro {
-            font-family: var(--font-editorial);
-            font-size: 1.5rem;
-            line-height: 1.4;
-            color: var(--ink-secondary);
-            margin-bottom: 36px;
-            font-style: italic;
-        }
-
-        .hero-actions {
-            display: flex;
-            gap: 14px;
-            font-family: var(--font-mono);
-            font-size: 12px;
-        }
-
-        .btn-primary {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background-color: var(--cobalt);
-            color: #FFFFFF;
-            padding: 12px 20px;
-            text-decoration: none;
-            font-weight: 700;
-            transition: background-color 0.15s ease;
-            border: 1px solid var(--cobalt);
-        }
-
-        .btn-primary:hover {
-            background-color: var(--cobalt-dark);
-            border-color: var(--cobalt-dark);
-        }
-
-        .btn-outline {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background-color: transparent;
-            color: var(--ink-primary);
-            padding: 12px 20px;
-            text-decoration: none;
-            font-weight: 700;
-            border: 1px solid var(--border-heavy);
-            transition: all 0.15s ease;
-        }
-
-        .btn-outline:hover {
-            background-color: var(--ink-primary);
-            color: #FFFFFF;
-        }
-
-        /* Hero Right / Quick Facts Box */
-        .hero-right {
-            display: flex;
-            flex-direction: column;
-            background-color: #FAFAFB;
-        }
-
-        .facts-header {
-            padding: 16px 24px;
-            border-bottom: 1px solid var(--border-hairline);
-            border-top: 3px solid var(--cobalt);
-            font-family: var(--font-mono);
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            color: var(--cobalt);
-            font-weight: 700;
-            background-color: var(--cobalt-tint);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .facts-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 13px;
-        }
-
-        .facts-table tr {
-            border-bottom: 1px solid var(--border-hairline);
-            transition: background-color 0.15s ease;
-        }
-
-        .facts-table tr:hover {
-            background-color: var(--cobalt-tint);
-        }
-
-        .facts-table tr:last-child {
-            border-bottom: none;
-        }
-
-        .facts-table td {
-            padding: 16px 24px;
-            vertical-align: top;
-        }
-
-        .fact-key {
-            font-family: var(--font-mono);
-            font-size: 11px;
-            color: var(--ink-muted);
-            width: 36%;
-            text-transform: uppercase;
-            letter-spacing: 0.04em;
-        }
-
-        .fact-val {
-            font-weight: 500;
-            color: var(--ink-primary);
-        }
-
-        .fact-val a {
-            color: var(--cobalt);
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        .fact-val a:hover {
-            text-decoration: underline;
-        }
-
-        /* Section Headings */
-        .section-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 16px 52px;
-            border-bottom: 1px solid var(--border-hairline);
-            background-color: var(--bg-paper);
-            border-left: 4px solid var(--cobalt);
-        }
-
-        .section-header-title {
-            font-size: 1.15rem;
-            font-weight: 700;
-            color: var(--ink-primary);
-            letter-spacing: -0.02em;
-        }
-
-        .section-header-num {
-            font-family: var(--font-mono);
-            font-size: 11px;
-            color: var(--cobalt);
-            font-weight: 700;
-            background-color: var(--cobalt-tint);
-            padding: 2px 8px;
-            border: 1px solid var(--cobalt-border);
-        }
-
-        /* About Section */
-        .about-grid {
-            display: grid;
-            grid-template-columns: 1.1fr 1fr;
-            border-bottom: 1px solid var(--border-hairline);
-        }
-
-        .about-col {
-            padding: 44px 52px;
-        }
-
-        .about-col:first-child {
-            border-right: 1px solid var(--border-hairline);
-        }
-
-        .about-lead {
-            font-size: 1.15rem;
-            line-height: 1.6;
-            color: var(--ink-primary);
-            margin-bottom: 16px;
-            font-weight: 500;
-        }
-
-        .about-body {
-            color: var(--ink-secondary);
-            font-size: 0.95rem;
-            line-height: 1.7;
-            margin-bottom: 16px;
-        }
-
-        .blue-callout {
-            background-color: var(--cobalt-tint);
-            border-left: 3px solid var(--cobalt);
-            padding: 16px 20px;
-            margin-top: 20px;
-            font-size: 0.9rem;
-            color: var(--ink-secondary);
-        }
-
-        .blue-callout strong {
-            color: var(--cobalt-dark);
-        }
-
-        /* Hobbies Grid */
-        .interests-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            border-bottom: 1px solid var(--border-hairline);
-        }
-
-        .interest-card {
-            padding: 38px 52px;
-            border-right: 1px solid var(--border-hairline);
-            border-bottom: 1px solid var(--border-hairline);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            min-height: 220px;
-            background-color: var(--bg-surface);
-            transition: all 0.15s ease;
-            position: relative;
-        }
-
-        .interest-card:nth-child(2n) {
-            border-right: none;
-        }
-
-        .interest-card:nth-last-child(-n+2) {
-            border-bottom: none;
-        }
-
-        .interest-card:hover {
-            background-color: var(--cobalt-tint);
-        }
-
-        .interest-card:hover .interest-title {
-            color: var(--cobalt);
-        }
-
-        .interest-top {
-            display: flex;
-            align-items: baseline;
-            justify-content: space-between;
-            margin-bottom: 14px;
-        }
-
-        .interest-tag {
-            font-family: var(--font-mono);
-            font-size: 11px;
-            font-weight: 700;
-            color: var(--cobalt);
-            text-transform: uppercase;
-        }
-
-        .interest-title {
-            font-size: 1.4rem;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            margin-bottom: 10px;
-            color: var(--ink-primary);
-            transition: color 0.15s ease;
-        }
-
-        .interest-desc {
-            color: var(--ink-secondary);
-            font-size: 0.94rem;
-            line-height: 1.6;
-            margin-bottom: 22px;
-        }
-
-        .tags-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            border-top: 1px solid var(--border-hairline);
-            padding-top: 16px;
-        }
-
-        .tag-chip {
-            font-family: var(--font-mono);
-            font-size: 11px;
-            color: var(--cobalt-dark);
-            background-color: var(--cobalt-tint);
-            border: 1px solid var(--cobalt-border);
-            padding: 3px 8px;
-            font-weight: 500;
-        }
-
-        /* Directory Table */
-        .directory-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 14px;
-            border-bottom: 1px solid var(--border-hairline);
-        }
-
-        .directory-table th {
-            font-family: var(--font-mono);
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
-            color: var(--ink-muted);
-            background-color: var(--bg-paper);
-            border-bottom: 1px solid var(--border-hairline);
-            border-right: 1px solid var(--border-hairline);
-            padding: 14px 28px;
-            text-align: left;
-            font-weight: 600;
-        }
-
-        .directory-table th:last-child {
-            border-right: none;
-        }
-
-        .directory-table td {
-            padding: 18px 28px;
-            border-bottom: 1px solid var(--border-hairline);
-            border-right: 1px solid var(--border-hairline);
-            vertical-align: middle;
-        }
-
-        .directory-table td:last-child {
-            border-right: none;
-            text-align: right;
-        }
-
-        .directory-table tr:hover td {
-            background-color: var(--cobalt-tint);
-        }
-
-        .dir-platform {
-            font-weight: 600;
-            color: var(--ink-primary);
-        }
-
-        .dir-handle {
-            font-family: var(--font-mono);
-            font-size: 13px;
-            color: var(--ink-secondary);
-        }
-
-        .btn-small {
-            background-color: var(--bg-surface);
-            border: 1px solid var(--border-heavy);
-            padding: 6px 14px;
-            font-family: var(--font-mono);
-            font-size: 11px;
-            font-weight: 700;
-            color: var(--ink-primary);
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-            transition: all 0.15s ease;
-        }
-
-        .btn-small:hover {
-            background-color: var(--cobalt);
-            border-color: var(--cobalt);
-            color: #FFFFFF;
-        }
-
-        .btn-small.blue-fill {
-            background-color: var(--cobalt);
-            border-color: var(--cobalt);
-            color: #FFFFFF;
-        }
-
-        .btn-small.blue-fill:hover {
-            background-color: var(--cobalt-dark);
-            border-color: var(--cobalt-dark);
-        }
-
-        /* Bottom Blue Banner */
-        .contact-banner {
-            display: grid;
-            grid-template-columns: 1fr auto;
-            align-items: center;
-            gap: 24px;
-            padding: 44px 52px;
-            background-color: var(--cobalt);
-            color: #FFFFFF;
-            border-bottom: 1px solid var(--border-hairline);
-        }
-
-        .contact-banner h3 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            margin-bottom: 6px;
-        }
-
-        .contact-banner p {
-            color: rgba(255, 255, 255, 0.85);
-            font-size: 0.95rem;
-        }
-
-        .btn-banner {
-            display: inline-block;
-            background-color: #FFFFFF;
-            color: var(--cobalt);
-            padding: 14px 24px;
-            font-family: var(--font-mono);
-            font-size: 12px;
-            font-weight: 700;
-            text-decoration: none;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            transition: all 0.15s ease;
-            white-space: nowrap;
-        }
-
-        .btn-banner:hover {
-            background-color: #0F172A;
-            color: #FFFFFF;
-        }
-
-        /* Footer */
-        footer {
-            padding: 32px 52px;
-            background-color: var(--bg-paper);
-            font-family: var(--font-mono);
-            font-size: 11px;
-            color: var(--ink-muted);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        footer a {
-            color: var(--cobalt);
-            text-decoration: none;
-            font-weight: 700;
-        }
-
-        footer a:hover {
-            text-decoration: underline;
-        }
-
-        /* Toast Feedback */
-        .toast {
-            position: fixed;
-            bottom: 24px;
-            right: 24px;
-            background-color: var(--ink-primary);
-            color: #FFFFFF;
-            padding: 12px 20px;
-            font-family: var(--font-mono);
-            font-size: 12px;
-            border-left: 4px solid var(--cobalt);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            z-index: 1000;
-            transform: translateY(100px);
-            opacity: 0;
-            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-            pointer-events: none;
-            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
-        }
-
-        .toast.active {
-            transform: translateY(0);
-            opacity: 1;
-        }
-
-        /* Responsive Breakpoints */
-        @media (max-width: 880px) {
             .topbar-inner {
-                grid-template-columns: 1fr auto;
+                max-inline-size: 71.25rem;
+                margin-inline: auto;
+                display: grid;
+                grid-template-columns: 1fr auto auto auto;
+                border-inline: 1px solid var(--border-hairline);
             }
-            .topbar-cell:nth-child(3),
-            .topbar-cell:nth-child(4) {
-                display: none;
+
+            .topbar-cell {
+                padding-block: 0.75rem;
+                padding-inline: 1.125rem;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                color: var(--ink-secondary);
             }
+
+            .topbar-cell:not(:last-child) {
+                border-inline-end: 1px solid var(--border-hairline);
+            }
+
+            .topbar-brand {
+                font-weight: 700;
+                color: var(--ink-primary);
+            }
+
+            .topbar-clock {
+                color: var(--cobalt);
+                font-weight: 700;
+                font-variant-numeric: tabular-nums;
+            }
+
+            /* Main Page Wrapper */
+            .wrapper {
+                max-inline-size: 71.25rem;
+                inline-size: 100%;
+                margin-inline: auto;
+                border-inline: 1px solid var(--border-hairline);
+                background-color: var(--bg-surface);
+                container-type: inline-size;
+                container-name: page;
+            }
+
+            /* Asymmetrical Hero Section */
             .hero {
-                grid-template-columns: 1fr;
+                display: grid;
+                grid-template-columns: 1.35fr 1fr;
+                border-block-end: 1px solid var(--border-hairline);
             }
+
             .hero-left {
-                border-right: none;
-                border-bottom: 1px solid var(--border-hairline);
-                padding: 36px 24px;
-            }
-            h1.hero-title {
-                font-size: 2.8rem;
-            }
-            .section-header {
-                padding: 16px 24px;
-            }
-            .about-grid {
-                grid-template-columns: 1fr;
-            }
-            .about-col:first-child {
-                border-right: none;
-                border-bottom: 1px solid var(--border-hairline);
-            }
-            .about-col {
-                padding: 32px 24px;
-            }
-            .interests-grid {
-                grid-template-columns: 1fr;
-            }
-            .interest-card {
-                border-right: none !important;
-                padding: 32px 24px;
-            }
-            .directory-table {
-                display: block;
-                overflow-x: auto;
-            }
-            .contact-banner {
-                grid-template-columns: 1fr;
-                padding: 32px 24px;
-            }
-            footer {
+                padding: 3.25rem;
+                border-inline-end: 1px solid var(--border-hairline);
+                display: flex;
                 flex-direction: column;
-                gap: 12px;
-                padding: 28px 24px;
+                justify-content: space-between;
+            }
+
+            .hero-right {
+                display: flex;
+                flex-direction: column;
+                background-color: var(--bg-subtle);
+            }
+
+            /* About Section */
+            .about-grid {
+                display: grid;
+                grid-template-columns: 1.1fr 1fr;
+                border-block-end: 1px solid var(--border-hairline);
+            }
+
+            .about-col {
+                padding-block: 2.75rem;
+                padding-inline: 3.25rem;
+            }
+
+            .about-col:first-child {
+                border-inline-end: 1px solid var(--border-hairline);
+            }
+
+            /* Hobbies Grid */
+            .interests-grid {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                border-block-end: 1px solid var(--border-hairline);
+            }
+
+            /* Contact Banner */
+            .contact-banner {
+                display: grid;
+                grid-template-columns: 1fr auto;
+                align-items: center;
+                gap: 1.5rem;
+                padding-block: 2.75rem;
+                padding-inline: 3.25rem;
+                background-color: var(--cobalt-fill);
+                color: var(--on-cobalt);
+                border-block-end: 1px solid var(--border-hairline);
+            }
+
+            /* Footer */
+            footer {
+                padding-block: 2rem;
+                padding-inline: 3.25rem;
+                background-color: var(--bg-paper);
+                font-family: var(--font-mono);
+                font-size: 0.6875rem;
+                color: var(--ink-muted);
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                gap: 0.75rem;
+            }
+
+            @container topbar (width < 55rem) {
+                .topbar-inner {
+                    grid-template-columns: 1fr auto;
+                }
+
+                .topbar-cell:nth-child(n + 3) {
+                    display: none;
+                }
+
+                .topbar-cell:nth-child(2) {
+                    border-inline-end: none;
+                }
+            }
+
+            @container page (width < 55rem) {
+                .hero {
+                    grid-template-columns: 1fr;
+                }
+
+                .hero-left {
+                    border-inline-end: none;
+                    border-block-end: 1px solid var(--border-hairline);
+                    padding-block: 2.25rem;
+                    padding-inline: 1.5rem;
+                }
+
+                .about-grid {
+                    grid-template-columns: 1fr;
+                }
+
+                .about-col:first-child {
+                    border-inline-end: none;
+                    border-block-end: 1px solid var(--border-hairline);
+                }
+
+                .about-col {
+                    padding-block: 2rem;
+                    padding-inline: 1.5rem;
+                }
+
+                .interests-grid {
+                    grid-template-columns: 1fr;
+                }
+
+                .contact-banner {
+                    grid-template-columns: 1fr;
+                    padding-block: 2rem;
+                    padding-inline: 1.5rem;
+                }
+
+                footer {
+                    flex-direction: column;
+                    padding-block: 1.75rem;
+                    padding-inline: 1.5rem;
+                }
+            }
+        }
+
+        @layer components {
+            .status-dot {
+                inline-size: 0.5rem;
+                block-size: 0.5rem;
+                flex-shrink: 0;
+                background-color: var(--cobalt-fill);
+                box-shadow: 0 0 0 2px var(--cobalt-border);
+            }
+
+            .tag-pill {
+                display: inline-block;
+                font-family: var(--font-mono);
+                font-size: 0.6875rem;
+                color: var(--cobalt);
+                background-color: var(--cobalt-tint);
+                border: 1px solid var(--cobalt-border);
+                padding-block: 0.25rem;
+                padding-inline: 0.625rem;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+                margin-block-end: 1.25rem;
+                inline-size: fit-content;
+            }
+
+            .hero-title {
+                font-size: clamp(2.5rem, 1.65rem + 3vw, 3.8rem);
+                line-height: 1.05;
+                letter-spacing: -0.04em;
+                font-weight: 700;
+                margin-block-end: 1.25rem;
+                color: var(--ink-primary);
+            }
+
+            .hero-title .blue-dot {
+                color: var(--cobalt);
+            }
+
+            .hero-intro {
+                font-family: var(--font-editorial);
+                font-size: clamp(1.25rem, 1.05rem + 0.6vw, 1.5rem);
+                line-height: 1.4;
+                color: var(--ink-secondary);
+                margin-block-end: 2.25rem;
+                font-style: italic;
+            }
+
+            .hero-actions {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.875rem;
+                font-family: var(--font-mono);
+                font-size: 0.75rem;
+            }
+
+            .btn-primary,
+            .btn-outline {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                gap: 0.5rem;
+                min-block-size: 2.75rem;
+                padding-block: 0.75rem;
+                padding-inline: 1.25rem;
+                text-decoration: none;
+                font-weight: 700;
+                transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, scale 0.15s ease-out;
+            }
+
+            .btn-primary {
+                background-color: var(--cobalt-fill);
+                color: var(--on-cobalt);
+                border: 1px solid var(--cobalt-fill);
+            }
+
+            .btn-primary:hover {
+                background-color: var(--cobalt-fill-hover);
+                border-color: var(--cobalt-fill-hover);
+            }
+
+            .btn-outline {
+                background-color: transparent;
+                color: var(--ink-primary);
+                border: 1px solid var(--border-heavy);
+            }
+
+            .btn-outline:hover {
+                background-color: var(--ink-primary);
+                color: var(--bg-surface);
+            }
+
+            @media (prefers-reduced-motion: no-preference) {
+                :where(.btn-primary, .btn-outline, .btn-small, .btn-banner):active {
+                    scale: 0.98;
+                }
+            }
+
+            /* Quick Facts Box */
+            .facts-header {
+                padding-block: 1rem;
+                padding-inline: 1.5rem;
+                border-block-end: 1px solid var(--border-hairline);
+                border-block-start: 3px solid var(--cobalt-fill);
+                font-family: var(--font-mono);
+                font-size: 0.6875rem;
+                text-transform: uppercase;
+                letter-spacing: 0.08em;
+                color: var(--cobalt);
+                font-weight: 700;
+                background-color: var(--cobalt-tint);
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+
+            .facts-title {
+                font-size: inherit;
+                font-weight: inherit;
+                letter-spacing: inherit;
+            }
+
+            .facts-table {
+                inline-size: 100%;
+                border-collapse: collapse;
+                font-size: 0.8125rem;
+            }
+
+            .facts-table tr {
+                transition: background-color 0.15s ease;
+            }
+
+            .facts-table tr:not(:last-child) {
+                border-block-end: 1px solid var(--border-hairline);
+            }
+
+            .facts-table tr:hover {
+                background-color: var(--cobalt-tint);
+            }
+
+            .facts-table th,
+            .facts-table td {
+                padding-block: 1rem;
+                padding-inline: 1.5rem;
+                vertical-align: top;
+                text-align: start;
+            }
+
+            .fact-key {
+                font-family: var(--font-mono);
+                font-size: 0.6875rem;
+                font-weight: 400;
+                color: var(--ink-muted);
+                inline-size: 36%;
+                text-transform: uppercase;
+                letter-spacing: 0.04em;
+            }
+
+            .fact-val {
+                font-weight: 500;
+                color: var(--ink-primary);
+            }
+
+            .fact-val a {
+                color: var(--cobalt);
+                text-decoration: none;
+                font-weight: 600;
+            }
+
+            .fact-val a:hover {
+                text-decoration: underline;
+                text-decoration-thickness: 2px;
+                text-underline-offset: 2px;
+            }
+
+            /* Section Headings */
+            .section-header {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 1rem;
+                padding-block: 1rem;
+                padding-inline: 3.25rem;
+                border-block-end: 1px solid var(--border-hairline);
+                background-color: var(--bg-paper);
+                border-inline-start: 4px solid var(--cobalt-fill);
+            }
+
+            .section-header-title {
+                font-size: 1.15rem;
+                font-weight: 700;
+                color: var(--ink-primary);
+                letter-spacing: -0.02em;
+            }
+
+            .section-header-num {
+                font-family: var(--font-mono);
+                font-size: 0.6875rem;
+                color: var(--cobalt);
+                font-weight: 700;
+                background-color: var(--cobalt-tint);
+                padding-block: 0.125rem;
+                padding-inline: 0.5rem;
+                border: 1px solid var(--cobalt-border);
+                flex-shrink: 0;
+            }
+
+            /* About copy */
+            .about-lead {
+                font-size: 1.15rem;
+                line-height: 1.6;
+                color: var(--ink-primary);
+                margin-block-end: 1rem;
+                font-weight: 500;
+            }
+
+            .about-body {
+                color: var(--ink-secondary);
+                font-size: 0.95rem;
+                line-height: 1.7;
+                margin-block-end: 1rem;
+            }
+
+            .about-body:last-child {
+                margin-block-end: 0;
+            }
+
+            .blue-callout {
+                background-color: var(--cobalt-tint);
+                border-inline-start: 3px solid var(--cobalt-fill);
+                padding-block: 1rem;
+                padding-inline: 1.25rem;
+                margin-block-start: 1.25rem;
+                font-size: 0.9rem;
+                color: var(--ink-secondary);
+            }
+
+            .blue-callout strong {
+                color: var(--cobalt-dark);
+            }
+
+            /* Interest Cards */
+            .interest-card {
+                padding-block: 2.375rem;
+                padding-inline: 3.25rem;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                min-block-size: 13.75rem;
+                background-color: var(--bg-surface);
+                transition: background-color 0.15s ease;
+                position: relative;
+            }
+
+            .interest-card:not(:nth-child(2n)) {
+                border-inline-end: 1px solid var(--border-hairline);
+            }
+
+            .interest-card:not(:nth-last-child(-n + 2)) {
+                border-block-end: 1px solid var(--border-hairline);
+            }
+
+            .interest-card:hover {
+                background-color: var(--cobalt-tint);
+            }
+
+            .interest-card:hover .interest-title {
+                color: var(--cobalt);
+            }
+
+            .interest-top {
+                display: flex;
+                align-items: baseline;
+                justify-content: space-between;
+                margin-block-end: 0.875rem;
+            }
+
+            .interest-tag {
+                font-family: var(--font-mono);
+                font-size: 0.6875rem;
+                font-weight: 700;
+                color: var(--cobalt);
+                text-transform: uppercase;
+            }
+
+            .interest-icon {
+                font-size: 1.25rem;
+                line-height: 1;
+            }
+
+            .interest-title {
+                font-size: 1.4rem;
+                font-weight: 700;
+                letter-spacing: -0.02em;
+                margin-block-end: 0.625rem;
+                color: var(--ink-primary);
+                transition: color 0.15s ease;
+            }
+
+            .interest-desc {
+                color: var(--ink-secondary);
+                font-size: 0.94rem;
+                line-height: 1.6;
+                margin-block-end: 1.375rem;
+            }
+
+            .tags-row {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.5rem;
+                border-block-start: 1px solid var(--border-hairline);
+                padding-block-start: 1rem;
+            }
+
+            .tag-chip {
+                font-family: var(--font-mono);
+                font-size: 0.6875rem;
+                color: var(--cobalt-dark);
+                background-color: var(--cobalt-tint);
+                border: 1px solid var(--cobalt-border);
+                padding-block: 0.1875rem;
+                padding-inline: 0.5rem;
+                font-weight: 500;
+            }
+
+            /* Responsive Directory Table */
+            .table-wrapper {
+                overflow-x: auto;
+                max-inline-size: 100%;
+                container-type: inline-size;
+                container-name: directory-table;
+                border-block-end: 1px solid var(--border-hairline);
+            }
+
+            .directory-table {
+                inline-size: 100%;
+                border-collapse: separate;
+                border-spacing: 0;
+                font-size: 0.875rem;
+                --label-2: "Details";
+                --label-3: "Action";
+            }
+
+            .directory-table col.col-platform {
+                inline-size: 25%;
+            }
+
+            .directory-table col.col-details {
+                inline-size: 45%;
+            }
+
+            .directory-table col.col-action {
+                inline-size: 30%;
+            }
+
+            .directory-table thead th {
+                font-family: var(--font-mono);
+                font-size: 0.6875rem;
+                text-transform: uppercase;
+                letter-spacing: 0.06em;
+                color: var(--ink-muted);
+                background-color: var(--bg-paper);
+                border-block-end: 1px solid var(--border-hairline);
+                padding-block: 0.875rem;
+                padding-inline: 1.75rem;
+                text-align: start;
+                font-weight: 600;
+            }
+
+            .directory-table thead th:not(:last-child) {
+                border-inline-end: 1px solid var(--border-hairline);
+            }
+
+            .directory-table tbody th,
+            .directory-table tbody td {
+                padding-block: 1.125rem;
+                padding-inline: 1.75rem;
+                vertical-align: middle;
+                text-align: start;
+                transition: background-color 0.15s ease;
+            }
+
+            .directory-table tbody tr:not(:last-child) :where(th, td) {
+                border-block-end: 1px solid var(--border-hairline);
+            }
+
+            .directory-table tbody :where(th, td):not(:last-child) {
+                border-inline-end: 1px solid var(--border-hairline);
+            }
+
+            .directory-table tbody td:last-child {
+                text-align: end;
+            }
+
+            .directory-table tbody tr:hover :where(th, td) {
+                background-color: var(--cobalt-tint);
+            }
+
+            .dir-platform {
+                font-weight: 600;
+                color: var(--ink-primary);
+            }
+
+            .dir-handle {
+                font-family: var(--font-mono);
+                font-size: 0.8125rem;
+                color: var(--ink-secondary);
+                overflow-wrap: anywhere;
+            }
+
+            .dir-actions {
+                display: inline-flex;
+                flex-wrap: wrap;
+                justify-content: flex-end;
+                gap: 0.5rem;
+            }
+
+            .btn-small {
+                background-color: var(--bg-surface);
+                border: 1px solid var(--border-heavy);
+                min-block-size: 2rem;
+                min-inline-size: 2rem;
+                padding-block: 0.375rem;
+                padding-inline: 0.875rem;
+                font-family: var(--font-mono);
+                font-size: 0.6875rem;
+                font-weight: 700;
+                color: var(--ink-primary);
+                cursor: pointer;
+                text-decoration: none;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                gap: 0.375rem;
+                transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, scale 0.15s ease-out;
+            }
+
+            @media (pointer: coarse) {
+                .btn-small {
+                    min-block-size: 2.75rem;
+                    padding-block: 0.625rem;
+                    padding-inline: 1rem;
+                }
+            }
+
+            .btn-small:hover:not(:disabled) {
+                background-color: var(--cobalt-fill);
+                border-color: var(--cobalt-fill);
+                color: var(--on-cobalt);
+            }
+
+            .btn-small.blue-fill,
+            .btn-small[data-copied] {
+                background-color: var(--cobalt-fill);
+                border-color: var(--cobalt-fill);
+                color: var(--on-cobalt);
+            }
+
+            .btn-small.blue-fill:hover:not(:disabled) {
+                background-color: var(--cobalt-fill-hover);
+                border-color: var(--cobalt-fill-hover);
+            }
+
+            .btn-small[data-failed] {
+                background-color: var(--ink-primary);
+                border-color: var(--ink-primary);
+                color: var(--bg-surface);
+            }
+
+            @container directory-table (width < 42rem) {
+                .directory-table,
+                .directory-table tbody,
+                .directory-table tr,
+                .directory-table th,
+                .directory-table td {
+                    display: block;
+                }
+
+                .directory-table colgroup,
+                .directory-table thead {
+                    display: none;
+                }
+
+                .directory-table tbody tr:not(:last-child) {
+                    border-block-end: 1px solid var(--border-hairline);
+                }
+
+                .directory-table tbody tr :where(th, td) {
+                    border-inline-end: none;
+                    border-block-end: none;
+                    padding-inline: 1.5rem;
+                }
+
+                .directory-table tbody th.dir-platform {
+                    background-color: var(--bg-paper);
+                    border-block-end: 1px solid var(--border-hairline);
+                    padding-block: 0.75rem;
+                    font-family: var(--font-mono);
+                    font-size: 0.75rem;
+                    text-transform: uppercase;
+                    letter-spacing: 0.06em;
+                    color: var(--cobalt);
+                }
+
+                .directory-table tbody td {
+                    padding-block: 0.75rem;
+                    text-align: start;
+                }
+
+                .directory-table tbody td:last-child {
+                    padding-block-end: 1.125rem;
+                    text-align: start;
+                }
+
+                .directory-table tbody td:nth-child(2)::before {
+                    content: var(--label-2) ": ";
+                    display: block;
+                    font-family: var(--font-mono);
+                    font-size: 0.6875rem;
+                    text-transform: uppercase;
+                    letter-spacing: 0.05em;
+                    color: var(--ink-muted);
+                    margin-block-end: 0.25rem;
+                }
+
+                .directory-table tbody td:nth-child(3)::before {
+                    content: var(--label-3) ": ";
+                    display: block;
+                    font-family: var(--font-mono);
+                    font-size: 0.6875rem;
+                    text-transform: uppercase;
+                    letter-spacing: 0.05em;
+                    color: var(--ink-muted);
+                    margin-block-end: 0.5rem;
+                }
+
+                .dir-actions {
+                    justify-content: flex-start;
+                }
+            }
+
+            /* Contact Banner */
+            .contact-banner h3 {
+                font-size: 1.5rem;
+                font-weight: 700;
+                letter-spacing: -0.02em;
+                margin-block-end: 0.375rem;
+            }
+
+            .contact-banner p {
+                color: var(--on-cobalt-muted);
+                font-size: 0.95rem;
+            }
+
+            .btn-banner {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                gap: 0.5rem;
+                min-block-size: 2.75rem;
+                background-color: var(--banner-btn-bg);
+                color: var(--banner-btn-ink);
+                padding-block: 0.875rem;
+                padding-inline: 1.5rem;
+                font-family: var(--font-mono);
+                font-size: 0.75rem;
+                font-weight: 700;
+                text-decoration: none;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+                border: 1px solid transparent;
+                box-shadow: 0 2px 4px rgb(0 0 0 / 0.12);
+                transition: background-color 0.15s ease, color 0.15s ease, scale 0.15s ease-out;
+            }
+
+            .btn-banner:hover {
+                background-color: var(--banner-btn-hover-bg);
+                color: var(--banner-btn-hover-ink);
+            }
+
+            .btn-banner:focus-visible {
+                outline: 2px solid var(--on-cobalt);
+                outline-offset: 3px;
+            }
+
+            /* Footer Links */
+            footer a {
+                color: var(--cobalt);
+                text-decoration: none;
+                font-weight: 700;
+            }
+
+            footer a:hover {
+                text-decoration: underline;
+                text-decoration-thickness: 2px;
+                text-underline-offset: 2px;
+            }
+
+            /* Top-Layer Toast Notification */
+            .toast {
+                position: fixed;
+                inset-block-start: auto;
+                inset-inline-start: auto;
+                inset-block-end: 1.5rem;
+                inset-inline-end: 1.5rem;
+                margin: 0;
+                max-inline-size: calc(100vw - 3rem);
+                max-inline-size: calc(100dvi - 3rem);
+                background-color: var(--toast-bg);
+                color: var(--toast-ink);
+                padding-block: 0.75rem;
+                padding-inline: 1.25rem 0.75rem;
+                font-family: var(--font-mono);
+                font-size: 0.75rem;
+                border: 1px solid var(--border-hairline);
+                border-inline-start: 4px solid var(--cobalt-fill);
+                align-items: center;
+                gap: 0.75rem;
+                box-shadow: 0 4px 14px rgb(0 0 0 / 0.2);
+                opacity: 0;
+                transition-property: opacity, translate, display, overlay;
+                transition-duration: 0.2s;
+                transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+                transition-behavior: allow-discrete;
+
+                @media (prefers-reduced-motion: no-preference) {
+                    translate: 0 1.25rem;
+                }
+
+                @media (prefers-reduced-motion: reduce) {
+                    transition-duration: 0.1s;
+                }
+            }
+
+            .toast:is(:popover-open, .\:popover-open) {
+                display: flex;
+            }
+
+            .toast:is(:popover-open, .\:popover-open):where(:not([data-closing])) {
+                opacity: 1;
+
+                @starting-style {
+                    opacity: 0;
+                }
+
+                @media (prefers-reduced-motion: no-preference) {
+                    translate: 0 0;
+
+                    @starting-style {
+                        translate: 0 1.25rem;
+                    }
+                }
+            }
+
+            .toast-close {
+                min-inline-size: 1.75rem;
+                min-block-size: 1.75rem;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                color: inherit;
+                opacity: 0.8;
+                cursor: pointer;
+                font-size: 1rem;
+                line-height: 1;
+                transition: opacity 0.15s ease, background-color 0.15s ease;
+            }
+
+            .toast-close:hover {
+                opacity: 1;
+                background-color: rgb(255 255 255 / 0.12);
+            }
+
+            .toast-close:focus-visible {
+                outline: 2px solid var(--toast-ink);
+                outline-offset: 2px;
+                opacity: 1;
+            }
+
+            @container page (width < 55rem) {
+                .section-header {
+                    padding-block: 1rem;
+                    padding-inline: 1.5rem;
+                }
+
+                .interest-card {
+                    padding-block: 2rem;
+                    padding-inline: 1.5rem;
+                    border-inline-end: none;
+                }
+
+                .interest-card:not(:last-child) {
+                    border-block-end: 1px solid var(--border-hairline);
+                }
+            }
+
+            @media (forced-colors: active) {
+                :where(a:any-link, button, [tabindex]):focus-visible {
+                    outline: 2px solid CanvasText;
+                }
+
+                .status-dot {
+                    background-color: Highlight;
+                    border: 2px solid CanvasText;
+                    box-shadow: none;
+                }
+
+                .btn-primary,
+                .btn-outline,
+                .btn-small,
+                .btn-banner,
+                .tag-pill,
+                .tag-chip,
+                .section-header-num,
+                .blue-callout,
+                .toast {
+                    border: 1px solid CanvasText;
+                }
+            }
+        }
+
+        @layer utilities {
+            .visually-hidden:where(:not(:focus-within, :active)) {
+                position: absolute !important;
+                clip-path: inset(50%) !important;
+                overflow: hidden !important;
+                width: 1px !important;
+                height: 1px !important;
+                margin: -1px !important;
+                padding: 0 !important;
+                border: 0 !important;
+                white-space: nowrap !important;
             }
         }
     </style>
@@ -682,15 +1197,15 @@
     <header class="topbar">
         <div class="topbar-inner">
             <div class="topbar-cell">
-                <span class="status-dot"></span>
-                <span style="font-weight: 700; color: var(--ink-primary);">Justin Smith</span>
+                <span class="status-dot" aria-hidden="true"></span>
+                <span class="topbar-brand">Justin Smith</span>
                 <span>/ Personal Site</span>
             </div>
             <div class="topbar-cell">
                 <span>California, USA</span>
             </div>
             <div class="topbar-cell">
-                <span id="liveClock" style="color: var(--cobalt); font-weight: 700;">00:00:00 PST</span>
+                <time id="liveClock" class="topbar-clock">00:00:00 PST</time>
             </div>
             <div class="topbar-cell">
                 <span>2026</span>
@@ -699,307 +1214,540 @@
     </header>
 
     <div class="wrapper">
-        <!-- Asymmetrical Hero Section -->
-        <section class="hero">
-            <div class="hero-left">
-                <div>
-                    <span class="tag-pill">Personal Website</span>
-                    <h1 class="hero-title">Justin Smith<span class="blue-dot">.</span></h1>
-                    <p class="hero-intro">
-                        Hi! I'm Justin. I'm into technology, gaming, and playing basketball out in California. Welcome to my little website.
-                    </p>
-                </div>
-                <div class="hero-actions">
-                    <a href="#contact" class="btn-primary">Get In Touch &rarr;</a>
-                    <a href="#about" class="btn-outline">About Me &darr;</a>
-                </div>
-            </div>
-
-            <!-- Quick Facts Sidebar -->
-            <div class="hero-right">
-                <div class="facts-header">
-                    <span>Quick Facts</span>
-                    <span>[01]</span>
-                </div>
-                <table class="facts-table">
-                    <tr>
-                        <td class="fact-key">Location</td>
-                        <td class="fact-val">California (Pacific Time)</td>
-                    </tr>
-                    <tr>
-                        <td class="fact-key">Interests</td>
-                        <td class="fact-val">Tech, PC hardware, web projects</td>
-                    </tr>
-                    <tr>
-                        <td class="fact-key">Active Games</td>
-                        <td class="fact-val">Minecraft &bull; V Rising</td>
-                    </tr>
-                    <tr>
-                        <td class="fact-key">Sport</td>
-                        <td class="fact-val">Basketball 🏀</td>
-                    </tr>
-                    <tr>
-                        <td class="fact-key">Favorite Shows</td>
-                        <td class="fact-val">Teen Wolf &bull; The Vampire Diaries</td>
-                    </tr>
-                    <tr>
-                        <td class="fact-key">GitHub</td>
-                        <td class="fact-val"><a href="https://github.com/1juicytree" target="_blank" rel="noopener noreferrer">@1juicytree &nearr;</a></td>
-                    </tr>
-                    <tr>
-                        <td class="fact-key">Twitter / X</td>
-                        <td class="fact-val"><a href="https://twitter.com/1juicytree" target="_blank" rel="noopener noreferrer">@1juicytree &nearr;</a></td>
-                    </tr>
-                </table>
-            </div>
-        </section>
-
-        <!-- Section 01: About Me -->
-        <div class="section-header" id="about">
-            <span class="section-header-title">About Me</span>
-            <span class="section-header-num">01</span>
-        </div>
-
-        <section class="about-grid">
-            <div class="about-col">
-                <p class="about-lead">
-                    I threw this site together to have a clean, straightforward place to showcase a little about me.
-                </p>
-                <p class="about-body">
-                    I've been hooked on technology for as long as I can remember. Lately, that looks like following new PC hardware drops, experimenting with new apps/products, and hacking away at random web projects to see what I can build.
-                </p>
-            </div>
-            <div class="about-col">
-                <p class="about-lead">
-                    When I step away from the keyboard, I try to keep things active.
-                </p>
-                <p class="about-body">
-                    Basketball is my main reset button. I've always enjoyed getting shots up until sunset. If I'm staying in, you'll usually catch me on Discord running co-op sessions with friends or rewatching Teen Wolf and Vampire Diaries for the tenth time.
-                </p>
-                <div class="blue-callout">
-                    <strong>Right now:</strong> Hooping on weekends, testing developer tools, and building in Minecraft.
-                </div>
-            </div>
-        </section>
-
-        <!-- Section 02: Hobbies & Interests -->
-        <div class="section-header" id="interests">
-            <span class="section-header-title">Hobbies & What I Do</span>
-            <span class="section-header-num">02</span>
-        </div>
-
-        <section class="interests-grid">
-            <!-- Basketball -->
-            <div class="interest-card">
-                <div>
-                    <div class="interest-top">
-                        <span class="interest-tag">Athletics</span>
-                        <span style="font-size: 1.25rem;">🏀</span>
+        <main>
+            <!-- Asymmetrical Hero Section -->
+            <section class="hero">
+                <div class="hero-left">
+                    <div>
+                        <span class="tag-pill">Personal Website</span>
+                        <h1 class="hero-title">Justin Smith<span class="blue-dot">.</span></h1>
+                        <p class="hero-intro">
+                            Hi! I'm Justin. I'm into technology, gaming, and playing basketball out in California. Welcome to my little website.
+                        </p>
                     </div>
-                    <h3 class="interest-title">Basketball</h3>
-                    <p class="interest-desc">
-                        I try to hoop whenever I get some free time. Whether it's going out with friends to play or just shooting around by myself, it's easily my favorite way to stay active and clear my head.
-                    </p>
-                </div>
-                <div class="tags-row">
-                    <span class="tag-chip">Pickup Games</span>
-                    <span class="tag-chip">Half-Court</span>
-                    <span class="tag-chip">Cardio</span>
-                </div>
-            </div>
-
-            <!-- Video Games -->
-            <div class="interest-card">
-                <div>
-                    <div class="interest-top">
-                        <span class="interest-tag">Gaming</span>
-                        <span style="font-size: 1.25rem;">🎮</span>
+                    <div class="hero-actions">
+                        <a href="#contact" class="btn-primary">Get In Touch <span aria-hidden="true">&rarr;</span></a>
+                        <a href="#about" class="btn-outline">About Me <span aria-hidden="true">&darr;</span></a>
                     </div>
-                    <h3 class="interest-title">Minecraft & V Rising</h3>
-                    <p class="interest-desc">
-                        I'm a huge fan of survival and sandbox games. There's something really satisfying about spending hours building massive bases in Minecraft or grinding out boss fights in V Rising with friends.
-                    </p>
                 </div>
-                <div class="tags-row">
-                    <span class="tag-chip">Minecraft</span>
-                    <span class="tag-chip">V Rising</span>
-                    <span class="tag-chip">Co-op</span>
-                </div>
-            </div>
 
-            <!-- Shows & Series -->
-            <div class="interest-card">
-                <div>
-                    <div class="interest-top">
-                        <span class="interest-tag">Shows & Series</span>
-                        <span style="font-size: 1.25rem;">📺</span>
+                <!-- Quick Facts Sidebar -->
+                <aside class="hero-right" aria-labelledby="facts-heading">
+                    <div class="facts-header">
+                        <h2 id="facts-heading" class="facts-title">Quick Facts</h2>
+                        <span aria-hidden="true">[01]</span>
                     </div>
-                    <h3 class="interest-title">Supernatural Drama</h3>
-                    <p class="interest-desc">
-                        Guilty as charged. I love binge-worthy supernatural mysteries and teen drama. Teen Wolf and The Vampire Diaries are prime TV for me, and I'll gladly rewatch entire seasons.
-                    </p>
-                </div>
-                <div class="tags-row">
-                    <span class="tag-chip">Teen Wolf</span>
-                    <span class="tag-chip">The Vampire Diaries</span>
-                    <span class="tag-chip">Mystery</span>
-                </div>
-            </div>
+                    <table class="facts-table">
+                        <caption class="visually-hidden">Quick Facts</caption>
+                        <tbody>
+                            <tr>
+                                <th scope="row" class="fact-key">Location</th>
+                                <td class="fact-val">California (Pacific Time)</td>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="fact-key">Interests</th>
+                                <td class="fact-val">Tech, PC hardware, web projects</td>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="fact-key">Active Games</th>
+                                <td class="fact-val">Minecraft <span aria-hidden="true">&bull;</span> V Rising</td>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="fact-key">Sport</th>
+                                <td class="fact-val">Basketball <span aria-hidden="true">🏀</span></td>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="fact-key">Favorite Shows</th>
+                                <td class="fact-val">Teen Wolf <span aria-hidden="true">&bull;</span> The Vampire Diaries</td>
+                            </tr>
+                            <tr>
+                                <th scope="row" id="fact-github-key" class="fact-key">GitHub</th>
+                                <td class="fact-val"><a id="fact-github-link" href="https://github.com/1juicytree" target="_blank" rel="noopener noreferrer" aria-labelledby="fact-github-link fact-github-key">@1juicytree <span aria-hidden="true">&nearr;</span></a></td>
+                            </tr>
+                            <tr>
+                                <th scope="row" id="fact-twitter-key" class="fact-key">Twitter / X</th>
+                                <td class="fact-val"><a id="fact-twitter-link" href="https://twitter.com/1juicytree" target="_blank" rel="noopener noreferrer" aria-labelledby="fact-twitter-link fact-twitter-key">@1juicytree <span aria-hidden="true">&nearr;</span></a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </aside>
+            </section>
 
-            <!-- Tech & Gadgets -->
-            <div class="interest-card">
-                <div>
-                    <div class="interest-top">
-                        <span class="interest-tag">Tinkering</span>
-                        <span style="font-size: 1.25rem;">⚡</span>
+            <!-- Section 01: About Me -->
+            <section>
+                <div class="section-header" id="about">
+                    <h2 class="section-header-title">About Me</h2>
+                    <span class="section-header-num" aria-hidden="true">01</span>
+                </div>
+
+                <div class="about-grid">
+                    <div class="about-col">
+                        <p class="about-lead">
+                            I threw this site together to have a clean, straightforward place to showcase a little about me.
+                        </p>
+                        <p class="about-body">
+                            I've been hooked on technology for as long as I can remember. Lately, that looks like following new PC hardware drops, experimenting with new apps/products, and hacking away at random web projects to see what I can build.
+                        </p>
                     </div>
-                    <h3 class="interest-title">Tech & Gadgets</h3>
-                    <p class="interest-desc">
-                        Always curious about new hardware, testing AI tools, and tinkering with little web projects like this one. If there's a new gadget or tool worth checking out, I'm probably looking into it.
-                    </p>
+                    <div class="about-col">
+                        <p class="about-lead">
+                            When I step away from the keyboard, I try to keep things active.
+                        </p>
+                        <p class="about-body">
+                            Basketball is my main reset button. I've always enjoyed getting shots up until sunset. If I'm staying in, you'll usually catch me on Discord running co-op sessions with friends or rewatching Teen Wolf and Vampire Diaries for the tenth time.
+                        </p>
+                        <div class="blue-callout">
+                            <strong>Right now:</strong> Hooping on weekends, testing developer tools, and building in Minecraft.
+                        </div>
+                    </div>
                 </div>
-                <div class="tags-row">
-                    <span class="tag-chip">Hardware</span>
-                    <span class="tag-chip">AI Tools</span>
-                    <span class="tag-chip">Web Dev</span>
+            </section>
+
+            <!-- Section 02: Hobbies & Interests -->
+            <section>
+                <div class="section-header" id="interests">
+                    <h2 class="section-header-title">Hobbies & What I Do</h2>
+                    <span class="section-header-num" aria-hidden="true">02</span>
                 </div>
-            </div>
-        </section>
 
-        <!-- Section 03: Contact Directory -->
-        <div class="section-header" id="contact">
-            <span class="section-header-title">Connect & Contact Info</span>
-            <span class="section-header-num">03</span>
-        </div>
+                <div class="interests-grid">
+                    <!-- Basketball -->
+                    <article class="interest-card">
+                        <div>
+                            <div class="interest-top">
+                                <span class="interest-tag">Athletics</span>
+                                <span class="interest-icon" aria-hidden="true">🏀</span>
+                            </div>
+                            <h3 class="interest-title">Basketball</h3>
+                            <p class="interest-desc">
+                                I try to hoop whenever I get some free time. Whether it's going out with friends to play or just shooting around by myself, it's easily my favorite way to stay active and clear my head.
+                            </p>
+                        </div>
+                        <ul class="tags-row" role="list">
+                            <li class="tag-chip">Pickup Games</li>
+                            <li class="tag-chip">Half-Court</li>
+                            <li class="tag-chip">Cardio</li>
+                        </ul>
+                    </article>
 
-        <table class="directory-table">
-            <thead>
-                <tr>
-                    <th style="width: 25%;">Platform</th>
-                    <th style="width: 45%;">Details</th>
-                    <th style="width: 30%;">Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td class="dir-platform">Email</td>
-                    <td class="dir-handle">1justin.josephsmith@gmail.com</td>
-                    <td>
-                        <button class="btn-small" onclick="copySnippet('1justin.josephsmith@gmail.com', 'Email', event)">Copy</button>
-                        <a href="mailto:1justin.josephsmith@gmail.com" class="btn-small blue-fill">Send Email &rarr;</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="dir-platform">Phone</td>
-                    <td class="dir-handle">(559) 223-8292</td>
-                    <td>
-                        <button class="btn-small" onclick="copySnippet('(559)-223-8292', 'Phone', event)">Copy Phone</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="dir-platform">Discord</td>
-                    <td class="dir-handle">1juicytree</td>
-                    <td>
-                        <button class="btn-small" onclick="copySnippet('1juicytree', 'Discord', event)">Copy Tag</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="dir-platform">GitHub</td>
-                    <td class="dir-handle">github.com/1juicytree</td>
-                    <td>
-                        <a href="https://github.com/1juicytree" target="_blank" rel="noopener noreferrer" class="btn-small">Visit Profile &nearr;</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="dir-platform">Twitter / X</td>
-                    <td class="dir-handle">twitter.com/1juicytree (@1juicytree)</td>
-                    <td>
-                        <a href="https://twitter.com/1juicytree" target="_blank" rel="noopener noreferrer" class="btn-small">Visit Profile &nearr;</a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+                    <!-- Video Games -->
+                    <article class="interest-card">
+                        <div>
+                            <div class="interest-top">
+                                <span class="interest-tag">Gaming</span>
+                                <span class="interest-icon" aria-hidden="true">🎮</span>
+                            </div>
+                            <h3 class="interest-title">Minecraft & V Rising</h3>
+                            <p class="interest-desc">
+                                I'm a huge fan of survival and sandbox games. There's something really satisfying about spending hours building massive bases in Minecraft or grinding out boss fights in V Rising with friends.
+                            </p>
+                        </div>
+                        <ul class="tags-row" role="list">
+                            <li class="tag-chip">Minecraft</li>
+                            <li class="tag-chip">V Rising</li>
+                            <li class="tag-chip">Co-op</li>
+                        </ul>
+                    </article>
 
-        <!-- Vibrant Blue Contact Banner -->
-        <div class="contact-banner">
-            <div>
-                <h3>Want to chat or collaborate?</h3>
-                <p>Feel free to reach out if you want to talk about tech, team up in a game, or just say hello.</p>
-            </div>
-            <div>
-                <a href="mailto:1justin.josephsmith@gmail.com?subject=Hello%20Justin!" class="btn-banner">
-                    Drop Me an Email &rarr;
-                </a>
-            </div>
-        </div>
+                    <!-- Shows & Series -->
+                    <article class="interest-card">
+                        <div>
+                            <div class="interest-top">
+                                <span class="interest-tag">Shows & Series</span>
+                                <span class="interest-icon" aria-hidden="true">📺</span>
+                            </div>
+                            <h3 class="interest-title">Supernatural Drama</h3>
+                            <p class="interest-desc">
+                                Guilty as charged. I love binge-worthy supernatural mysteries and teen drama. Teen Wolf and The Vampire Diaries are prime TV for me, and I'll gladly rewatch entire seasons.
+                            </p>
+                        </div>
+                        <ul class="tags-row" role="list">
+                            <li class="tag-chip">Teen Wolf</li>
+                            <li class="tag-chip">The Vampire Diaries</li>
+                            <li class="tag-chip">Mystery</li>
+                        </ul>
+                    </article>
+
+                    <!-- Tech & Gadgets -->
+                    <article class="interest-card">
+                        <div>
+                            <div class="interest-top">
+                                <span class="interest-tag">Tinkering</span>
+                                <span class="interest-icon" aria-hidden="true">⚡</span>
+                            </div>
+                            <h3 class="interest-title">Tech & Gadgets</h3>
+                            <p class="interest-desc">
+                                Always curious about new hardware, testing AI tools, and tinkering with little web projects like this one. If there's a new gadget or tool worth checking out, I'm probably looking into it.
+                            </p>
+                        </div>
+                        <ul class="tags-row" role="list">
+                            <li class="tag-chip">Hardware</li>
+                            <li class="tag-chip">AI Tools</li>
+                            <li class="tag-chip">Web Dev</li>
+                        </ul>
+                    </article>
+                </div>
+            </section>
+
+            <!-- Section 03: Contact Directory -->
+            <section>
+                <div class="section-header" id="contact">
+                    <h2 id="contact-heading" class="section-header-title">Connect & Contact Info</h2>
+                    <span class="section-header-num" aria-hidden="true">03</span>
+                </div>
+
+                <div class="table-wrapper" tabindex="0" role="region" aria-labelledby="contact-heading">
+                    <table class="directory-table">
+                        <caption class="visually-hidden">Connect & Contact Info</caption>
+                        <colgroup>
+                            <col class="col-platform">
+                            <col class="col-details">
+                            <col class="col-action">
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th scope="col">Platform</th>
+                                <th scope="col">Details</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row" id="dir-email" class="dir-platform">Email</th>
+                                <td id="contact-email" class="dir-handle">1justin.josephsmith@gmail.com</td>
+                                <td>
+                                    <div class="dir-actions">
+                                        <button type="button" id="copy-email" class="btn-small" command="--copy" commandfor="contact-email" data-copy-label="Email" aria-labelledby="copy-email dir-email">Copy</button>
+                                        <a href="mailto:1justin.josephsmith@gmail.com" class="btn-small blue-fill">Send Email <span aria-hidden="true">&rarr;</span></a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row" id="dir-phone" class="dir-platform">Phone</th>
+                                <td id="contact-phone" class="dir-handle">(559) 223-8292</td>
+                                <td>
+                                    <div class="dir-actions">
+                                        <button type="button" class="btn-small" command="--copy" commandfor="contact-phone" data-copy-label="Phone">Copy Phone</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row" id="dir-discord" class="dir-platform">Discord</th>
+                                <td id="contact-discord" class="dir-handle">1juicytree</td>
+                                <td>
+                                    <div class="dir-actions">
+                                        <button type="button" class="btn-small" command="--copy" commandfor="contact-discord" data-copy-label="Discord">Copy Tag</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row" id="dir-github" class="dir-platform">GitHub</th>
+                                <td class="dir-handle">github.com/1juicytree</td>
+                                <td>
+                                    <div class="dir-actions">
+                                        <a id="visit-github" href="https://github.com/1juicytree" target="_blank" rel="noopener noreferrer" class="btn-small" aria-labelledby="visit-github dir-github">Visit Profile <span aria-hidden="true">&nearr;</span></a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row" id="dir-twitter" class="dir-platform">Twitter / X</th>
+                                <td class="dir-handle">twitter.com/1juicytree (@1juicytree)</td>
+                                <td>
+                                    <div class="dir-actions">
+                                        <a id="visit-twitter" href="https://twitter.com/1juicytree" target="_blank" rel="noopener noreferrer" class="btn-small" aria-labelledby="visit-twitter dir-twitter">Visit Profile <span aria-hidden="true">&nearr;</span></a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Vibrant Blue Contact Banner -->
+                <div class="contact-banner">
+                    <div>
+                        <h3>Want to chat or collaborate?</h3>
+                        <p>Feel free to reach out if you want to talk about tech, team up in a game, or just say hello.</p>
+                    </div>
+                    <div>
+                        <a href="mailto:1justin.josephsmith@gmail.com?subject=Hello%20Justin!" class="btn-banner">
+                            Drop Me an Email <span aria-hidden="true">&rarr;</span>
+                        </a>
+                    </div>
+                </div>
+            </section>
+        </main>
 
         <!-- Footer -->
         <footer>
-            <div>&copy; 2026 Justin Smith &bull; Built with HTML & CSS</div>
-            <div><a href="#">Back to top &uarr;</a></div>
+            <div>&copy; 2026 Justin Smith <span aria-hidden="true">&bull;</span> Built with HTML & CSS</div>
+            <div><a href="#">Back to top <span aria-hidden="true">&uarr;</span></a></div>
         </footer>
     </div>
 
-    <!-- Notification Toast -->
-    <div id="toast" class="toast">
-        <span id="toastMessage">Copied to clipboard!</span>
+    <!-- Top-Layer Toast Notification Region -->
+    <div role="region" aria-label="Notifications">
+        <div id="toast" class="toast" popover="manual">
+            <span id="toastMessage"></span>
+            <button type="button" class="toast-close" popovertarget="toast" popovertargetaction="hide" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
     </div>
 
-    <script>
-        // Live California Time Clock
+    <!-- Pre-populated polite live region fallback when document.ariaNotify() is unavailable -->
+    <div id="liveAnnouncer" class="visually-hidden" role="status" aria-live="polite" aria-atomic="true"></div>
+
+    <script type="module">
+        // Conditionally load Popover polyfill only when native support is missing
+        if (!Object.hasOwn(HTMLElement.prototype, 'popover')) {
+            import('https://unpkg.com/@oddbird/popover-polyfill@latest/dist/popover.min.js').catch(() => {});
+        }
+
+        // Live California Time Clock (hoisted formatter, paused while tab is hidden)
+        const clockEl = document.getElementById('liveClock');
+        const clockFormatter = new Intl.DateTimeFormat('en-US', {
+            timeZone: 'America/Los_Angeles',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hourCycle: 'h23',
+            timeZoneName: 'short',
+        });
+
+        let clockTimerId = null;
+
         function updateClock() {
-            const clockEl = document.getElementById('liveClock');
             if (!clockEl) return;
             const now = new Date();
-            const options = {
-                timeZone: 'America/Los_Angeles',
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit',
-                hour12: false
-            };
-            const formatter = new Intl.DateTimeFormat([], options);
-            clockEl.textContent = formatter.format(now) + ' PST';
+            clockEl.textContent = clockFormatter.format(now);
+            clockEl.dateTime = now.toISOString();
         }
-        setInterval(updateClock, 1000);
-        updateClock();
 
-        // Copy Helper with In-Button and Toast Feedback
-        function copySnippet(text, label, event) {
-            const btn = event ? event.currentTarget || event.target : null;
-            const originalText = btn ? btn.textContent : '';
+        function syncClockTimer() {
+            clearInterval(clockTimerId);
+            if (!document.hidden) {
+                updateClock();
+                clockTimerId = setInterval(updateClock, 1000);
+            }
+        }
 
-            navigator.clipboard.writeText(text).then(() => {
-                showToast(`Copied ${label}: ${text}`);
-                if (btn && btn.tagName === 'BUTTON') {
-                    btn.textContent = 'Copied! ✓';
-                    btn.style.backgroundColor = 'var(--cobalt)';
-                    btn.style.color = '#FFFFFF';
-                    setTimeout(() => {
-                        btn.textContent = originalText;
-                        btn.style.backgroundColor = '';
-                        btn.style.color = '';
-                    }, 1400);
-                }
-            }).catch(() => {
-                const ta = document.createElement('textarea');
-                ta.value = text;
-                document.body.appendChild(ta);
-                ta.select();
-                document.execCommand('copy');
-                document.body.removeChild(ta);
-                showToast(`Copied ${label}`);
+        document.addEventListener('visibilitychange', syncClockTimer);
+        syncClockTimer();
+
+        // Top-layer exit transition capability probe (handles Firefox bug 1882408 & Safari overlay gap)
+        let supportsDisplayTransition;
+        function canTransitionDisplay() {
+            if (supportsDisplayTransition !== undefined) return supportsDisplayTransition;
+            if (!window.CSS?.supports?.('transition-behavior', 'allow-discrete') || !document.body) {
+                return false;
+            }
+            const probe = document.createElement('div');
+            probe.style.cssText = 'transition: display 1s allow-discrete !important; display: block;';
+            document.body.appendChild(probe);
+            getComputedStyle(probe).display;
+            probe.style.display = 'none';
+            supportsDisplayTransition = getComputedStyle(probe).display === 'block';
+            probe.remove();
+            return supportsDisplayTransition;
+        }
+
+        function supportsTopLayerExit() {
+            return Boolean(window.CSS?.supports?.('overlay', 'auto') && canTransitionDisplay());
+        }
+
+        // Accessible status announcements (ariaNotify with VoiceOver-safe live region fallback)
+        const liveAnnouncer = document.getElementById('liveAnnouncer');
+        let lastAnnouncement = '';
+        let announceClearTimer = null;
+
+        function announce(message) {
+            if (typeof document.ariaNotify === 'function') {
+                document.ariaNotify(message);
+                return;
+            }
+            if (!liveAnnouncer) return;
+            clearTimeout(announceClearTimer);
+            let text = message;
+            if (text === lastAnnouncement) text += '\u00A0';
+            lastAnnouncement = text;
+            liveAnnouncer.textContent = '';
+            requestAnimationFrame(() => {
+                liveAnnouncer.textContent = text;
             });
+            announceClearTimer = setTimeout(() => {
+                liveAnnouncer.textContent = '';
+            }, 3000);
         }
 
-        function showToast(msg) {
-            const toast = document.getElementById('toast');
-            const toastMessage = document.getElementById('toastMessage');
-            toastMessage.textContent = msg;
-            toast.classList.add('active');
-            setTimeout(() => {
-                toast.classList.remove('active');
+        // Top-layer Popover Toast Management
+        const toast = document.getElementById('toast');
+        const toastMessage = document.getElementById('toastMessage');
+        const toastCloseBtn = toast?.querySelector('.toast-close');
+        let toastTimer = null;
+        let lastToastTrigger = null;
+
+        function isToastOpen() {
+            if (!toast) return false;
+            return toast.matches(':is(:popover-open, .\\:popover-open)');
+        }
+
+        function openToastPopover() {
+            if (!toast) return;
+            toast.removeAttribute('data-closing');
+            if (typeof toast.showPopover === 'function') {
+                if (!isToastOpen()) toast.showPopover();
+            } else {
+                toast.classList.add(':popover-open');
+            }
+        }
+
+        async function hideToastPopover({ restoreFocus = false } = {}) {
+            if (!toast || !isToastOpen()) return;
+            clearTimeout(toastTimer);
+            const hadFocus = toast.contains(document.activeElement);
+
+            if (!supportsTopLayerExit()) {
+                toast.setAttribute('data-closing', '');
+                const animations = toast.getAnimations({ subtree: true });
+                if (animations.length > 0) {
+                    await Promise.race([
+                        Promise.allSettled(animations.map((a) => a.finished)),
+                        new Promise((r) => setTimeout(r, 1000)),
+                    ]);
+                }
+                if (!toast.hasAttribute('data-closing')) return;
+                toast.removeAttribute('data-closing');
+            }
+
+            if (typeof toast.hidePopover === 'function') {
+                if (isToastOpen()) toast.hidePopover();
+            } else {
+                toast.classList.remove(':popover-open');
+            }
+
+            if (restoreFocus && hadFocus && lastToastTrigger?.isConnected) {
+                lastToastTrigger.focus();
+            }
+        }
+
+        function scheduleToastDismiss() {
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => {
+                if (toast?.contains(document.activeElement)) return;
+                hideToastPopover();
             }, 2400);
+        }
+
+        function showToast(msg, trigger) {
+            if (!toast || !toastMessage) return;
+            lastToastTrigger = trigger ?? document.activeElement;
+            toastMessage.textContent = msg;
+            openToastPopover();
+            announce(msg);
+            scheduleToastDismiss();
+        }
+
+        let toastHadFocusBeforeClose = false;
+        toast?.addEventListener('focusin', () => {
+            toastHadFocusBeforeClose = true;
+            clearTimeout(toastTimer);
+        });
+        toast?.addEventListener('focusout', (event) => {
+            if (!toast.contains(event.relatedTarget)) {
+                toastHadFocusBeforeClose = false;
+                if (isToastOpen()) scheduleToastDismiss();
+            }
+        });
+        toast?.addEventListener('toggle', (event) => {
+            if (event.newState === 'closed') {
+                clearTimeout(toastTimer);
+                if (toastHadFocusBeforeClose && lastToastTrigger?.isConnected) {
+                    toastHadFocusBeforeClose = false;
+                    lastToastTrigger.focus();
+                }
+            }
+        });
+        toastCloseBtn?.addEventListener('click', (event) => {
+            if (!supportsTopLayerExit()) {
+                event.preventDefault();
+                hideToastPopover({ restoreFocus: true });
+            }
+        });
+
+        // Copy Button Logic (Invoker Commands + Async Clipboard + Fallback)
+        const buttonTimers = new WeakMap();
+        const buttonOriginalLabels = new WeakMap();
+
+        function legacyCopy(text) {
+            const field = Object.assign(document.createElement('textarea'), { value: text });
+            field.setAttribute('readonly', '');
+            field.style.cssText = 'position:fixed;inset-block-start:0;opacity:0';
+            document.body.append(field);
+            field.select();
+            try {
+                return document.execCommand('copy');
+            } finally {
+                field.remove();
+            }
+        }
+
+        function reportCopy(button, ok, label, text) {
+            clearTimeout(buttonTimers.get(button));
+            if (!buttonOriginalLabels.has(button)) {
+                buttonOriginalLabels.set(button, button.textContent);
+            }
+            const originalLabel = buttonOriginalLabels.get(button);
+
+            button.removeAttribute('data-copied');
+            button.removeAttribute('data-failed');
+            void button.offsetWidth;
+
+            if (ok) {
+                button.setAttribute('data-copied', '');
+                button.textContent = 'Copied! ✓';
+                showToast(`Copied ${label}: ${text}`, button);
+            } else {
+                button.setAttribute('data-failed', '');
+                showToast(`Copy failed: ${label}`, button);
+            }
+
+            buttonTimers.set(button, setTimeout(() => {
+                button.removeAttribute('data-copied');
+                button.removeAttribute('data-failed');
+                button.textContent = originalLabel;
+            }, 1400));
+        }
+
+        async function copyFromTarget(button, target) {
+            const text = target.matches('input, textarea') ? target.value : target.innerText.trim();
+            if (!text) return;
+            const label = button.dataset.copyLabel || 'Text';
+            try {
+                try {
+                    await navigator.clipboard.writeText(text);
+                } catch {
+                    if (!legacyCopy(text)) throw new Error('Copy failed');
+                }
+                reportCopy(button, true, label, text);
+            } catch {
+                reportCopy(button, false, label, text);
+            }
+        }
+
+        // Register only one path (Invoker Commands when supported, click fallback otherwise)
+        if ('CommandEvent' in window) {
+            document.addEventListener('command', (event) => {
+                if (event.command === '--copy' && event.source && event.target) {
+                    copyFromTarget(event.source, event.target);
+                }
+            }, true);
+        } else {
+            document.addEventListener('click', (event) => {
+                const button = event.target.closest('button[command="--copy"]');
+                if (!button) return;
+                const target = document.getElementById(button.getAttribute('commandfor'));
+                if (target) copyFromTarget(button, target);
+            });
         }
     </script>
 </body>
