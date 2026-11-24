@@ -2,11 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="color-scheme" content="light dark">
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#F4F6FA">
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#080D18">
     <meta name="text-scale" content="scale">
     <title>Justin Smith - Personal Site</title>
-    <meta name="description" content="Personal website of Justin Smith, tech, gaming, basketball, and coding experiments.">
+    <meta name="description" content="Personal website of Justin Smith - tech, gaming, basketball, and coding experiments.">
 
     <!-- Open Graph Metadata -->
     <meta property="og:type" content="website">
@@ -19,43 +21,65 @@
     <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Space+Grotesk:wght@500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 
     <!-- Crisp Blue Favicon -->
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230047FF'/><text x='50%' y='65%' font-family='monospace' font-weight='700' font-size='54' fill='%23FFFFFF' text-anchor='middle'>JS</text></svg>">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230047FF'/><text x='50%' y='65%' font-family='monospace' font-weight='700' font-size='54' fill='%23FFFFFF' text-anchor='middle'>JS</text></svg>">
 
     <style>
-        @layer reset, tokens, base, layout, components, utilities;
+        @layer reset, tokens, base, layout, components, motion, utilities;
 
         @layer tokens {
             :root {
                 color-scheme: light dark;
 
+                /* Easing tokens (Emil Kowalski / Apple physical curves) */
+                --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+                --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+                --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+
+                /* Radii scale (nested geometry) */
+                --radius-lg: 1rem;
+                --radius-md: 0.625rem;
+                --radius-sm: 0.5rem;
+                --radius-xs: 0.375rem;
+
                 /* Light palette tokens */
-                --bg-paper-light: #F8F9FA;
+                --bg-paper-light: #F4F6FA;
                 --bg-surface-light: #FFFFFF;
-                --bg-subtle-light: #FAFAFB;
-                --ink-primary-light: #0F172A;
+                --bg-subtle-light: #F8FAFC;
+                --bg-chrome-light: rgb(244 246 250 / 0.82);
+                --bg-chrome-solid-light: #F4F6FA;
+                --ink-primary-light: #0B1221;
                 --ink-secondary-light: #475569;
                 --ink-muted-light: #526075;
                 --cobalt-light-mode: #0047FF;
-                --cobalt-dark-light-mode: #0036C8;
+                --cobalt-dark-light-mode: #0035C5;
                 --cobalt-fill-light: #0047FF;
-                --cobalt-fill-hover-light: #0036C8;
+                --cobalt-fill-hover-light: #0035C5;
+                --cobalt-banner-end-light: #0039D1;
                 --cobalt-tint-light: #EEF4FF;
-                --cobalt-border-light: #BFDBFE;
-                --border-hairline-light: #E2E8F0;
-                --border-heavy-light: #0F172A;
-                --toast-bg-light: #0F172A;
+                --cobalt-tint-strong-light: #E0ECFF;
+                --cobalt-border-light: #C7DCFF;
+                --border-hairline-light: rgb(15 23 42 / 0.09);
+                --border-strong-light: rgb(15 23 42 / 0.18);
+                --border-heavy-light: #0B1221;
+                --surface-highlight-light: inset 0 1px 0 rgb(255 255 255 / 0.9);
+                --shadow-card-light: 0 1px 2px rgb(15 23 42 / 0.04), 0 10px 28px -14px rgb(15 23 42 / 0.08);
+                --shadow-toast-light: 0 4px 12px rgb(15 23 42 / 0.12), 0 16px 32px -12px rgb(15 23 42 / 0.22);
+                --toast-bg-light: #0B1221;
                 --toast-ink-light: #FFFFFF;
+                --toast-border-light: rgb(255 255 255 / 0.12);
                 --banner-btn-bg-light: #FFFFFF;
                 --banner-btn-ink-light: #0047FF;
-                --banner-btn-hover-bg-light: #0F172A;
+                --banner-btn-hover-bg-light: #0B1221;
                 --banner-btn-hover-ink-light: #FFFFFF;
-                --scrollbar-track-light: #F1F5F9;
-                --scrollbar-thumb-light: #64748B;
+                --scrollbar-track-light: #EEF2F7;
+                --scrollbar-thumb-light: #94A3B8;
 
                 /* Dark palette tokens */
-                --bg-paper-dark: #0B1120;
+                --bg-paper-dark: #080D18;
                 --bg-surface-dark: #0F172A;
-                --bg-subtle-dark: #162033;
+                --bg-subtle-dark: #131D33;
+                --bg-chrome-dark: rgb(8 13 24 / 0.78);
+                --bg-chrome-solid-dark: #080D18;
                 --ink-primary-dark: #F1F5F9;
                 --ink-secondary-dark: #CBD5E1;
                 --ink-muted-dark: #94A3B8;
@@ -63,23 +87,32 @@
                 --cobalt-dark-dark-mode: #93C5FD;
                 --cobalt-fill-dark: #2563EB;
                 --cobalt-fill-hover-dark: #1D4ED8;
-                --cobalt-tint-dark: #172554;
-                --cobalt-border-dark: #1E40AF;
-                --border-hairline-dark: #1E293B;
+                --cobalt-banner-end-dark: #1D4ED8;
+                --cobalt-tint-dark: rgb(37 99 235 / 0.14);
+                --cobalt-tint-strong-dark: rgb(37 99 235 / 0.22);
+                --cobalt-border-dark: rgb(96 165 250 / 0.28);
+                --border-hairline-dark: rgb(241 245 249 / 0.09);
+                --border-strong-dark: rgb(241 245 249 / 0.18);
                 --border-heavy-dark: #94A3B8;
-                --toast-bg-dark: #1E293B;
+                --surface-highlight-dark: inset 0 1px 0 rgb(255 255 255 / 0.06);
+                --shadow-card-dark: 0 1px 2px rgb(0 0 0 / 0.35), 0 14px 32px -16px rgb(0 0 0 / 0.55);
+                --shadow-toast-dark: 0 8px 24px rgb(0 0 0 / 0.45), 0 2px 6px rgb(0 0 0 / 0.3);
+                --toast-bg-dark: #162238;
                 --toast-ink-dark: #F8FAFC;
+                --toast-border-dark: rgb(241 245 249 / 0.14);
                 --banner-btn-bg-dark: #FFFFFF;
                 --banner-btn-ink-dark: #1D4ED8;
-                --banner-btn-hover-bg-dark: #0F172A;
+                --banner-btn-hover-bg-dark: #0B1221;
                 --banner-btn-hover-ink-dark: #FFFFFF;
                 --scrollbar-track-dark: #0F172A;
-                --scrollbar-thumb-dark: #64748B;
+                --scrollbar-thumb-dark: #475569;
 
                 /* Semantic tokens (light default + prefers-color-scheme fallback) */
                 --bg-paper: var(--bg-paper-light);
                 --bg-surface: var(--bg-surface-light);
                 --bg-subtle: var(--bg-subtle-light);
+                --bg-chrome: var(--bg-chrome-light);
+                --bg-chrome-solid: var(--bg-chrome-solid-light);
                 --ink-primary: var(--ink-primary-light);
                 --ink-secondary: var(--ink-secondary-light);
                 --ink-muted: var(--ink-muted-light);
@@ -87,12 +120,19 @@
                 --cobalt-dark: var(--cobalt-dark-light-mode);
                 --cobalt-fill: var(--cobalt-fill-light);
                 --cobalt-fill-hover: var(--cobalt-fill-hover-light);
+                --cobalt-banner-end: var(--cobalt-banner-end-light);
                 --cobalt-tint: var(--cobalt-tint-light);
+                --cobalt-tint-strong: var(--cobalt-tint-strong-light);
                 --cobalt-border: var(--cobalt-border-light);
                 --border-hairline: var(--border-hairline-light);
+                --border-strong: var(--border-strong-light);
                 --border-heavy: var(--border-heavy-light);
+                --surface-highlight: var(--surface-highlight-light);
+                --shadow-card: var(--shadow-card-light);
+                --shadow-toast: var(--shadow-toast-light);
                 --toast-bg: var(--toast-bg-light);
                 --toast-ink: var(--toast-ink-light);
+                --toast-border: var(--toast-border-light);
                 --banner-btn-bg: var(--banner-btn-bg-light);
                 --banner-btn-ink: var(--banner-btn-ink-light);
                 --banner-btn-hover-bg: var(--banner-btn-hover-bg-light);
@@ -100,12 +140,14 @@
                 --scrollbar-track: var(--scrollbar-track-light);
                 --scrollbar-thumb: var(--scrollbar-thumb-light);
                 --on-cobalt: #FFFFFF;
-                --on-cobalt-muted: rgb(255 255 255 / 0.92);
+                --on-cobalt-muted: rgb(255 255 255 / 0.9);
 
                 @media (prefers-color-scheme: dark) {
                     --bg-paper: var(--bg-paper-dark);
                     --bg-surface: var(--bg-surface-dark);
                     --bg-subtle: var(--bg-subtle-dark);
+                    --bg-chrome: var(--bg-chrome-dark);
+                    --bg-chrome-solid: var(--bg-chrome-solid-dark);
                     --ink-primary: var(--ink-primary-dark);
                     --ink-secondary: var(--ink-secondary-dark);
                     --ink-muted: var(--ink-muted-dark);
@@ -113,12 +155,19 @@
                     --cobalt-dark: var(--cobalt-dark-dark-mode);
                     --cobalt-fill: var(--cobalt-fill-dark);
                     --cobalt-fill-hover: var(--cobalt-fill-hover-dark);
+                    --cobalt-banner-end: var(--cobalt-banner-end-dark);
                     --cobalt-tint: var(--cobalt-tint-dark);
+                    --cobalt-tint-strong: var(--cobalt-tint-strong-dark);
                     --cobalt-border: var(--cobalt-border-dark);
                     --border-hairline: var(--border-hairline-dark);
+                    --border-strong: var(--border-strong-dark);
                     --border-heavy: var(--border-heavy-dark);
+                    --surface-highlight: var(--surface-highlight-dark);
+                    --shadow-card: var(--shadow-card-dark);
+                    --shadow-toast: var(--shadow-toast-dark);
                     --toast-bg: var(--toast-bg-dark);
                     --toast-ink: var(--toast-ink-dark);
+                    --toast-border: var(--toast-border-dark);
                     --banner-btn-bg: var(--banner-btn-bg-dark);
                     --banner-btn-ink: var(--banner-btn-ink-dark);
                     --banner-btn-hover-bg: var(--banner-btn-hover-bg-dark);
@@ -131,6 +180,8 @@
                     --bg-paper: light-dark(var(--bg-paper-light), var(--bg-paper-dark));
                     --bg-surface: light-dark(var(--bg-surface-light), var(--bg-surface-dark));
                     --bg-subtle: light-dark(var(--bg-subtle-light), var(--bg-subtle-dark));
+                    --bg-chrome: light-dark(var(--bg-chrome-light), var(--bg-chrome-dark));
+                    --bg-chrome-solid: light-dark(var(--bg-chrome-solid-light), var(--bg-chrome-solid-dark));
                     --ink-primary: light-dark(var(--ink-primary-light), var(--ink-primary-dark));
                     --ink-secondary: light-dark(var(--ink-secondary-light), var(--ink-secondary-dark));
                     --ink-muted: light-dark(var(--ink-muted-light), var(--ink-muted-dark));
@@ -138,12 +189,16 @@
                     --cobalt-dark: light-dark(var(--cobalt-dark-light-mode), var(--cobalt-dark-dark-mode));
                     --cobalt-fill: light-dark(var(--cobalt-fill-light), var(--cobalt-fill-dark));
                     --cobalt-fill-hover: light-dark(var(--cobalt-fill-hover-light), var(--cobalt-fill-hover-dark));
+                    --cobalt-banner-end: light-dark(var(--cobalt-banner-end-light), var(--cobalt-banner-end-dark));
                     --cobalt-tint: light-dark(var(--cobalt-tint-light), var(--cobalt-tint-dark));
+                    --cobalt-tint-strong: light-dark(var(--cobalt-tint-strong-light), var(--cobalt-tint-strong-dark));
                     --cobalt-border: light-dark(var(--cobalt-border-light), var(--cobalt-border-dark));
                     --border-hairline: light-dark(var(--border-hairline-light), var(--border-hairline-dark));
+                    --border-strong: light-dark(var(--border-strong-light), var(--border-strong-dark));
                     --border-heavy: light-dark(var(--border-heavy-light), var(--border-heavy-dark));
                     --toast-bg: light-dark(var(--toast-bg-light), var(--toast-bg-dark));
                     --toast-ink: light-dark(var(--toast-ink-light), var(--toast-ink-dark));
+                    --toast-border: light-dark(var(--toast-border-light), var(--toast-border-dark));
                     --banner-btn-bg: light-dark(var(--banner-btn-bg-light), var(--banner-btn-bg-dark));
                     --banner-btn-ink: light-dark(var(--banner-btn-ink-light), var(--banner-btn-ink-dark));
                     --banner-btn-hover-bg: light-dark(var(--banner-btn-hover-bg-light), var(--banner-btn-hover-bg-dark));
@@ -164,12 +219,13 @@
 
             @supports not (scrollbar-color: auto) {
                 ::-webkit-scrollbar {
-                    width: 12px;
-                    height: 12px;
+                    width: 10px;
+                    height: 10px;
                 }
 
                 ::-webkit-scrollbar-thumb {
                     background: var(--scrollbar-thumb);
+                    border-radius: 999px;
                 }
 
                 ::-webkit-scrollbar-track {
@@ -183,27 +239,9 @@
                 box-sizing: border-box;
             }
 
-            body,
-            header,
-            main,
-            section,
-            aside,
-            footer,
-            div,
-            h1,
-            h2,
-            h3,
-            p,
-            ul,
-            li,
-            table,
-            thead,
-            tbody,
-            tr,
-            th,
-            td,
-            a,
-            button {
+            *,
+            *::before,
+            *::after {
                 box-sizing: inherit;
             }
 
@@ -232,6 +270,9 @@
 
         @layer base {
             html {
+                -webkit-tap-highlight-color: transparent;
+                -webkit-text-size-adjust: 100%;
+
                 @media (prefers-reduced-motion: no-preference) {
                     scroll-behavior: smooth;
                 }
@@ -246,13 +287,14 @@
                 background-color: var(--bg-paper);
                 color: var(--ink-primary);
                 font-family: var(--font-display);
-                font-size: 0.9375rem;
-                line-height: 1.6;
+                font-size: 0.96875rem;
+                line-height: 1.65;
+                letter-spacing: 0;
                 text-align: start;
                 overflow-wrap: break-word;
                 -webkit-font-smoothing: antialiased;
-                letter-spacing: -0.015em;
-                border-block-start: 4px solid var(--cobalt-fill);
+                -moz-osx-font-smoothing: grayscale;
+                min-block-size: 100svh;
             }
 
             :where(h1, h2, h3, th) {
@@ -264,7 +306,30 @@
             }
 
             :where([id]) {
-                scroll-margin-block-start: 1.25rem;
+                scroll-margin-block-start: 5rem;
+            }
+
+            /* Eliminate 300ms mobile tap delay on interactive controls */
+            a,
+            button,
+            [role="button"] {
+                touch-action: manipulation;
+            }
+
+            /* Keep controls non-selectable on long-press while leaving all copy selectable */
+            button,
+            [role="button"],
+            .btn-primary,
+            .btn-outline,
+            .btn-small,
+            .btn-banner,
+            .topbar-nav a,
+            .tag-pill,
+            .tag-chip,
+            .section-header-num {
+                user-select: none;
+                -webkit-user-select: none;
+                -webkit-touch-callout: none;
             }
 
             :where(a:any-link, button, [tabindex]):focus-visible {
@@ -274,40 +339,102 @@
         }
 
         @layer layout {
-            /* Top Bar */
+            /* Sticky Translucent Chrome Header */
             .topbar {
+                position: sticky;
+                inset-block-start: 0;
+                z-index: 40;
+                padding-block-start: env(safe-area-inset-top, 0px);
+                background-color: var(--bg-chrome);
+                backdrop-filter: blur(18px) saturate(165%);
+                -webkit-backdrop-filter: blur(18px) saturate(165%);
+                border-block-start: 3px solid var(--cobalt-fill);
                 border-block-end: 1px solid var(--border-hairline);
-                background-color: var(--bg-surface);
                 font-family: var(--font-mono);
                 font-size: 0.75rem;
                 container-type: inline-size;
                 container-name: topbar;
             }
 
-            .topbar-inner {
-                max-inline-size: 71.25rem;
-                margin-inline: auto;
-                display: grid;
-                grid-template-columns: 1fr auto auto auto;
-                border-inline: 1px solid var(--border-hairline);
+            @media (prefers-reduced-transparency: reduce) {
+                .topbar {
+                    background-color: var(--bg-chrome-solid);
+                    backdrop-filter: none;
+                    -webkit-backdrop-filter: none;
+                }
             }
 
-            .topbar-cell {
+            @media (prefers-contrast: more) {
+                .topbar {
+                    background-color: var(--bg-chrome-solid);
+                    backdrop-filter: none;
+                    -webkit-backdrop-filter: none;
+                    border-block-end-color: var(--border-heavy);
+                }
+            }
+
+            .topbar-inner {
+                max-inline-size: 70rem;
+                margin-inline: auto;
                 padding-block: 0.75rem;
-                padding-inline: 1.125rem;
+                padding-inline: max(1.5rem, env(safe-area-inset-left, 0px)) max(1.5rem, env(safe-area-inset-right, 0px));
                 display: flex;
                 align-items: center;
-                gap: 0.5rem;
-                color: var(--ink-secondary);
+                justify-content: space-between;
+                gap: 1.25rem;
             }
 
-            .topbar-cell:not(:last-child) {
-                border-inline-end: 1px solid var(--border-hairline);
+            .topbar-identity {
+                display: flex;
+                align-items: center;
+                gap: 0.625rem;
+                color: var(--ink-secondary);
+                text-decoration: none;
+                min-inline-size: 0;
             }
 
             .topbar-brand {
                 font-weight: 700;
                 color: var(--ink-primary);
+                letter-spacing: -0.01em;
+            }
+
+            .topbar-sub {
+                color: var(--ink-muted);
+            }
+
+            .topbar-nav {
+                display: flex;
+                align-items: center;
+                gap: 0.25rem;
+            }
+
+            .topbar-nav a {
+                color: var(--ink-secondary);
+                text-decoration: none;
+                padding-block: 0.375rem;
+                padding-inline: 0.75rem;
+                border-radius: var(--radius-xs);
+                font-weight: 700;
+                letter-spacing: 0.02em;
+                transition: color 150ms ease, background-color 150ms ease, transform 140ms var(--ease-out);
+            }
+
+            .topbar-nav a:active {
+                transform: scale(0.96);
+            }
+
+            .topbar-meta {
+                display: flex;
+                align-items: center;
+                gap: 0.875rem;
+                color: var(--ink-muted);
+            }
+
+            .topbar-divider {
+                inline-size: 1px;
+                block-size: 0.875rem;
+                background-color: var(--border-strong);
             }
 
             .topbar-clock {
@@ -316,48 +443,70 @@
                 font-variant-numeric: tabular-nums;
             }
 
-            /* Main Page Wrapper */
+            /* Main Page Canvas */
             .wrapper {
-                max-inline-size: 71.25rem;
+                max-inline-size: 70rem;
                 inline-size: 100%;
                 margin-inline: auto;
-                border-inline: 1px solid var(--border-hairline);
-                background-color: var(--bg-surface);
+                padding-block: clamp(2rem, 1.5rem + 2vw, 3.5rem) max(2rem, env(safe-area-inset-bottom, 0px));
+                padding-inline: max(1.5rem, env(safe-area-inset-left, 0px)) max(1.5rem, env(safe-area-inset-right, 0px));
                 container-type: inline-size;
                 container-name: page;
+            }
+
+            main {
+                display: flex;
+                flex-direction: column;
+                gap: clamp(3rem, 2.25rem + 2.5vw, 4.5rem);
             }
 
             /* Asymmetrical Hero Section */
             .hero {
                 display: grid;
-                grid-template-columns: 1.35fr 1fr;
-                border-block-end: 1px solid var(--border-hairline);
+                grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.95fr);
+                gap: clamp(1.75rem, 1.25rem + 2vw, 3rem);
+                align-items: stretch;
             }
 
             .hero-left {
-                padding: 3.25rem;
-                border-inline-end: 1px solid var(--border-hairline);
                 display: flex;
                 flex-direction: column;
                 justify-content: space-between;
+                padding-block: 0.75rem;
+                gap: 2rem;
             }
 
             .hero-right {
                 display: flex;
                 flex-direction: column;
-                background-color: var(--bg-subtle);
+                background-color: var(--bg-surface);
+                border: 1px solid var(--border-hairline);
+                border-radius: var(--radius-lg);
+                box-shadow: var(--surface-highlight), var(--shadow-card);
+                overflow: hidden;
             }
 
-            /* About Section */
+            /* Content Sections */
+            .content-section {
+                display: flex;
+                flex-direction: column;
+                gap: 1.25rem;
+            }
+
+            /* About Card */
             .about-grid {
                 display: grid;
-                grid-template-columns: 1.1fr 1fr;
-                border-block-end: 1px solid var(--border-hairline);
+                grid-template-columns: 1.05fr 1fr;
+                background-color: var(--bg-surface);
+                border: 1px solid var(--border-hairline);
+                border-radius: var(--radius-lg);
+                box-shadow: var(--surface-highlight), var(--shadow-card);
+                overflow: hidden;
             }
 
             .about-col {
-                padding-block: 2.75rem;
-                padding-inline: 3.25rem;
+                padding-block: 2.25rem;
+                padding-inline: 2.5rem;
             }
 
             .about-col:first-child {
@@ -368,7 +517,14 @@
             .interests-grid {
                 display: grid;
                 grid-template-columns: repeat(2, minmax(0, 1fr));
-                border-block-end: 1px solid var(--border-hairline);
+                gap: 1rem;
+            }
+
+            /* Contact Stack */
+            .contact-stack {
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
             }
 
             /* Contact Banner */
@@ -377,20 +533,21 @@
                 grid-template-columns: 1fr auto;
                 align-items: center;
                 gap: 1.5rem;
-                padding-block: 2.75rem;
-                padding-inline: 3.25rem;
-                background-color: var(--cobalt-fill);
+                padding-block: 2.25rem;
+                padding-inline: 2.5rem;
+                background: linear-gradient(180deg, var(--cobalt-fill) 0%, var(--cobalt-banner-end) 100%);
                 color: var(--on-cobalt);
-                border-block-end: 1px solid var(--border-hairline);
+                border-radius: var(--radius-lg);
+                box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.24), var(--shadow-card);
             }
 
             /* Footer */
             footer {
-                padding-block: 2rem;
-                padding-inline: 3.25rem;
-                background-color: var(--bg-paper);
+                margin-block-start: clamp(3rem, 2.25rem + 2vw, 4rem);
+                padding-block-start: 1.75rem;
+                border-block-start: 1px solid var(--border-hairline);
                 font-family: var(--font-mono);
-                font-size: 0.6875rem;
+                font-size: 0.75rem;
                 color: var(--ink-muted);
                 display: flex;
                 justify-content: space-between;
@@ -398,30 +555,32 @@
                 gap: 0.75rem;
             }
 
-            @container topbar (width < 55rem) {
-                .topbar-inner {
-                    grid-template-columns: 1fr auto;
-                }
-
-                .topbar-cell:nth-child(n + 3) {
+            @container topbar (width < 52rem) {
+                .topbar-location,
+                .topbar-year,
+                .topbar-divider-hide {
                     display: none;
-                }
-
-                .topbar-cell:nth-child(2) {
-                    border-inline-end: none;
                 }
             }
 
-            @container page (width < 55rem) {
+            @container topbar (width < 36rem) {
+                .topbar-sub,
+                .topbar-meta {
+                    display: none;
+                }
+
+                .topbar-inner {
+                    padding-inline: 1rem;
+                }
+            }
+
+            @container page (width < 54rem) {
                 .hero {
                     grid-template-columns: 1fr;
                 }
 
                 .hero-left {
-                    border-inline-end: none;
-                    border-block-end: 1px solid var(--border-hairline);
-                    padding-block: 2.25rem;
-                    padding-inline: 1.5rem;
+                    padding-block: 0.25rem;
                 }
 
                 .about-grid {
@@ -434,7 +593,7 @@
                 }
 
                 .about-col {
-                    padding-block: 2rem;
+                    padding-block: 1.75rem;
                     padding-inline: 1.5rem;
                 }
 
@@ -444,14 +603,13 @@
 
                 .contact-banner {
                     grid-template-columns: 1fr;
-                    padding-block: 2rem;
+                    padding-block: 1.75rem;
                     padding-inline: 1.5rem;
                 }
 
                 footer {
                     flex-direction: column;
-                    padding-block: 1.75rem;
-                    padding-inline: 1.5rem;
+                    align-items: flex-start;
                 }
             }
         }
@@ -460,30 +618,34 @@
             .status-dot {
                 inline-size: 0.5rem;
                 block-size: 0.5rem;
+                border-radius: 999px;
                 flex-shrink: 0;
                 background-color: var(--cobalt-fill);
-                box-shadow: 0 0 0 2px var(--cobalt-border);
+                box-shadow: 0 0 0 3px var(--cobalt-tint-strong);
             }
 
             .tag-pill {
-                display: inline-block;
+                display: inline-flex;
+                align-items: center;
+                gap: 0.5rem;
                 font-family: var(--font-mono);
                 font-size: 0.6875rem;
                 color: var(--cobalt);
                 background-color: var(--cobalt-tint);
                 border: 1px solid var(--cobalt-border);
-                padding-block: 0.25rem;
-                padding-inline: 0.625rem;
+                border-radius: var(--radius-xs);
+                padding-block: 0.3125rem;
+                padding-inline: 0.6875rem;
                 font-weight: 700;
                 text-transform: uppercase;
-                letter-spacing: 0.05em;
+                letter-spacing: 0.07em;
                 margin-block-end: 1.25rem;
                 inline-size: fit-content;
             }
 
             .hero-title {
-                font-size: clamp(2.5rem, 1.65rem + 3vw, 3.8rem);
-                line-height: 1.05;
+                font-size: clamp(2.75rem, 1.75rem + 3.2vw, 4.125rem);
+                line-height: 1.02;
                 letter-spacing: -0.04em;
                 font-weight: 700;
                 margin-block-end: 1.25rem;
@@ -496,17 +658,19 @@
 
             .hero-intro {
                 font-family: var(--font-editorial);
-                font-size: clamp(1.25rem, 1.05rem + 0.6vw, 1.5rem);
-                line-height: 1.4;
+                font-optical-sizing: auto;
+                font-size: clamp(1.25rem, 1.08rem + 0.55vw, 1.5rem);
+                line-height: 1.45;
+                letter-spacing: -0.005em;
                 color: var(--ink-secondary);
-                margin-block-end: 2.25rem;
+                max-inline-size: 36ch;
                 font-style: italic;
             }
 
             .hero-actions {
                 display: flex;
                 flex-wrap: wrap;
-                gap: 0.875rem;
+                gap: 0.75rem;
                 font-family: var(--font-mono);
                 font-size: 0.75rem;
             }
@@ -520,45 +684,46 @@
                 min-block-size: 2.75rem;
                 padding-block: 0.75rem;
                 padding-inline: 1.25rem;
+                border-radius: var(--radius-sm);
                 text-decoration: none;
                 font-weight: 700;
-                transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, scale 0.15s ease-out;
+                letter-spacing: 0.02em;
+                transition:
+                    background-color 150ms ease,
+                    border-color 150ms ease,
+                    color 150ms ease,
+                    transform 140ms var(--ease-out);
             }
 
             .btn-primary {
                 background-color: var(--cobalt-fill);
                 color: var(--on-cobalt);
                 border: 1px solid var(--cobalt-fill);
-            }
-
-            .btn-primary:hover {
-                background-color: var(--cobalt-fill-hover);
-                border-color: var(--cobalt-fill-hover);
+                box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.22);
             }
 
             .btn-outline {
-                background-color: transparent;
+                background-color: var(--bg-surface);
                 color: var(--ink-primary);
-                border: 1px solid var(--border-heavy);
+                border: 1px solid var(--border-strong);
+                box-shadow: var(--surface-highlight);
             }
 
-            .btn-outline:hover {
-                background-color: var(--ink-primary);
-                color: var(--bg-surface);
+            .btn-arrow {
+                display: inline-block;
+                transition: transform 180ms var(--ease-out);
             }
 
-            @media (prefers-reduced-motion: no-preference) {
-                :where(.btn-primary, .btn-outline, .btn-small, .btn-banner):active {
-                    scale: 0.98;
-                }
+            /* Instant pointer-down press feedback on all interactive buttons */
+            :where(.btn-primary, .btn-outline, .btn-small, .btn-banner, .toast-close):active {
+                transform: scale(0.97);
             }
 
-            /* Quick Facts Box */
+            /* Quick Facts Card */
             .facts-header {
-                padding-block: 1rem;
+                padding-block: 0.9375rem;
                 padding-inline: 1.5rem;
                 border-block-end: 1px solid var(--border-hairline);
-                border-block-start: 3px solid var(--cobalt-fill);
                 font-family: var(--font-mono);
                 font-size: 0.6875rem;
                 text-transform: uppercase;
@@ -580,26 +745,22 @@
             .facts-table {
                 inline-size: 100%;
                 border-collapse: collapse;
-                font-size: 0.8125rem;
+                font-size: 0.875rem;
             }
 
             .facts-table tr {
-                transition: background-color 0.15s ease;
+                transition: background-color 150ms ease;
             }
 
             .facts-table tr:not(:last-child) {
                 border-block-end: 1px solid var(--border-hairline);
             }
 
-            .facts-table tr:hover {
-                background-color: var(--cobalt-tint);
-            }
-
             .facts-table th,
             .facts-table td {
-                padding-block: 1rem;
+                padding-block: 0.9375rem;
                 padding-inline: 1.5rem;
-                vertical-align: top;
+                vertical-align: baseline;
                 text-align: start;
             }
 
@@ -608,9 +769,9 @@
                 font-size: 0.6875rem;
                 font-weight: 400;
                 color: var(--ink-muted);
-                inline-size: 36%;
+                inline-size: 38%;
                 text-transform: uppercase;
-                letter-spacing: 0.04em;
+                letter-spacing: 0.06em;
             }
 
             .fact-val {
@@ -619,35 +780,19 @@
             }
 
             .fact-val a {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.25rem;
                 color: var(--cobalt);
                 text-decoration: none;
                 font-weight: 600;
             }
 
-            .fact-val a:hover {
-                text-decoration: underline;
-                text-decoration-thickness: 2px;
-                text-underline-offset: 2px;
-            }
-
-            /* Section Headings */
+            /* Editorial Section Headers */
             .section-header {
                 display: flex;
                 align-items: center;
-                justify-content: space-between;
-                gap: 1rem;
-                padding-block: 1rem;
-                padding-inline: 3.25rem;
-                border-block-end: 1px solid var(--border-hairline);
-                background-color: var(--bg-paper);
-                border-inline-start: 4px solid var(--cobalt-fill);
-            }
-
-            .section-header-title {
-                font-size: 1.15rem;
-                font-weight: 700;
-                color: var(--ink-primary);
-                letter-spacing: -0.02em;
+                gap: 0.875rem;
             }
 
             .section-header-num {
@@ -655,25 +800,42 @@
                 font-size: 0.6875rem;
                 color: var(--cobalt);
                 font-weight: 700;
+                letter-spacing: 0.06em;
                 background-color: var(--cobalt-tint);
-                padding-block: 0.125rem;
-                padding-inline: 0.5rem;
+                padding-block: 0.25rem;
+                padding-inline: 0.5625rem;
                 border: 1px solid var(--cobalt-border);
+                border-radius: var(--radius-xs);
                 flex-shrink: 0;
             }
 
-            /* About copy */
-            .about-lead {
-                font-size: 1.15rem;
-                line-height: 1.6;
+            .section-header-title {
+                font-size: clamp(1.25rem, 1.1rem + 0.5vw, 1.5rem);
+                font-weight: 700;
                 color: var(--ink-primary);
-                margin-block-end: 1rem;
-                font-weight: 500;
+                letter-spacing: -0.025em;
+                line-height: 1.2;
+            }
+
+            .section-header-rule {
+                flex: 1;
+                block-size: 1px;
+                background-color: var(--border-hairline);
+            }
+
+            /* About Copy */
+            .about-lead {
+                font-size: 1.125rem;
+                line-height: 1.5;
+                letter-spacing: -0.015em;
+                color: var(--ink-primary);
+                margin-block-end: 0.875rem;
+                font-weight: 600;
             }
 
             .about-body {
                 color: var(--ink-secondary);
-                font-size: 0.95rem;
+                font-size: 0.96875rem;
                 line-height: 1.7;
                 margin-block-end: 1rem;
             }
@@ -684,11 +846,14 @@
 
             .blue-callout {
                 background-color: var(--cobalt-tint);
+                border: 1px solid var(--cobalt-border);
                 border-inline-start: 3px solid var(--cobalt-fill);
-                padding-block: 1rem;
-                padding-inline: 1.25rem;
+                border-radius: var(--radius-sm);
+                padding-block: 0.9375rem;
+                padding-inline: 1.125rem;
                 margin-block-start: 1.25rem;
                 font-size: 0.9rem;
+                line-height: 1.55;
                 color: var(--ink-secondary);
             }
 
@@ -698,73 +863,73 @@
 
             /* Interest Cards */
             .interest-card {
-                padding-block: 2.375rem;
-                padding-inline: 3.25rem;
+                padding-block: 1.75rem;
+                padding-inline: 1.875rem;
                 display: flex;
                 flex-direction: column;
                 justify-content: space-between;
-                min-block-size: 13.75rem;
+                min-block-size: 14rem;
                 background-color: var(--bg-surface);
-                transition: background-color 0.15s ease;
-                position: relative;
-            }
-
-            .interest-card:not(:nth-child(2n)) {
-                border-inline-end: 1px solid var(--border-hairline);
-            }
-
-            .interest-card:not(:nth-last-child(-n + 2)) {
-                border-block-end: 1px solid var(--border-hairline);
-            }
-
-            .interest-card:hover {
-                background-color: var(--cobalt-tint);
-            }
-
-            .interest-card:hover .interest-title {
-                color: var(--cobalt);
+                border: 1px solid var(--border-hairline);
+                border-radius: var(--radius-lg);
+                box-shadow: var(--surface-highlight), var(--shadow-card);
+                transition:
+                    border-color 180ms ease,
+                    background-color 180ms ease,
+                    transform 220ms var(--ease-out);
             }
 
             .interest-top {
                 display: flex;
-                align-items: baseline;
+                align-items: center;
                 justify-content: space-between;
-                margin-block-end: 0.875rem;
+                margin-block-end: 1rem;
             }
 
             .interest-tag {
                 font-family: var(--font-mono);
                 font-size: 0.6875rem;
                 font-weight: 700;
+                letter-spacing: 0.07em;
                 color: var(--cobalt);
                 text-transform: uppercase;
             }
 
             .interest-icon {
-                font-size: 1.25rem;
+                inline-size: 2.375rem;
+                block-size: 2.375rem;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                background-color: var(--cobalt-tint);
+                border: 1px solid var(--cobalt-border);
+                border-radius: var(--radius-md);
+                font-size: 1.125rem;
                 line-height: 1;
+                transition: background-color 160ms ease, transform 200ms var(--ease-out);
             }
 
             .interest-title {
-                font-size: 1.4rem;
+                font-size: 1.25rem;
                 font-weight: 700;
-                letter-spacing: -0.02em;
-                margin-block-end: 0.625rem;
+                line-height: 1.25;
+                letter-spacing: -0.025em;
+                margin-block-end: 0.5rem;
                 color: var(--ink-primary);
-                transition: color 0.15s ease;
+                transition: color 160ms ease;
             }
 
             .interest-desc {
                 color: var(--ink-secondary);
-                font-size: 0.94rem;
-                line-height: 1.6;
-                margin-block-end: 1.375rem;
+                font-size: 0.9375rem;
+                line-height: 1.65;
+                margin-block-end: 1.25rem;
             }
 
             .tags-row {
                 display: flex;
                 flex-wrap: wrap;
-                gap: 0.5rem;
+                gap: 0.4375rem;
                 border-block-start: 1px solid var(--border-hairline);
                 padding-block-start: 1rem;
             }
@@ -772,38 +937,54 @@
             .tag-chip {
                 font-family: var(--font-mono);
                 font-size: 0.6875rem;
+                letter-spacing: 0.02em;
                 color: var(--cobalt-dark);
                 background-color: var(--cobalt-tint);
                 border: 1px solid var(--cobalt-border);
-                padding-block: 0.1875rem;
-                padding-inline: 0.5rem;
+                border-radius: var(--radius-xs);
+                padding-block: 0.25rem;
+                padding-inline: 0.5625rem;
                 font-weight: 500;
             }
 
-            /* Responsive Directory Table */
+            /* Responsive Directory Table Card */
+            .table-card {
+                background-color: var(--bg-surface);
+                border: 1px solid var(--border-hairline);
+                border-radius: var(--radius-lg);
+                box-shadow: var(--surface-highlight), var(--shadow-card);
+                overflow: hidden;
+            }
+
             .table-wrapper {
                 overflow-x: auto;
+                overscroll-behavior-x: contain;
                 max-inline-size: 100%;
                 container-type: inline-size;
                 container-name: directory-table;
-                border-block-end: 1px solid var(--border-hairline);
+            }
+
+            .table-wrapper:focus-visible {
+                outline: 2px solid var(--cobalt);
+                outline-offset: -2px;
+                border-radius: var(--radius-lg);
             }
 
             .directory-table {
                 inline-size: 100%;
                 border-collapse: separate;
                 border-spacing: 0;
-                font-size: 0.875rem;
+                font-size: 0.9rem;
                 --label-2: "Details";
                 --label-3: "Action";
             }
 
             .directory-table col.col-platform {
-                inline-size: 25%;
+                inline-size: 23%;
             }
 
             .directory-table col.col-details {
-                inline-size: 45%;
+                inline-size: 47%;
             }
 
             .directory-table col.col-action {
@@ -814,43 +995,31 @@
                 font-family: var(--font-mono);
                 font-size: 0.6875rem;
                 text-transform: uppercase;
-                letter-spacing: 0.06em;
+                letter-spacing: 0.07em;
                 color: var(--ink-muted);
-                background-color: var(--bg-paper);
+                background-color: var(--bg-subtle);
                 border-block-end: 1px solid var(--border-hairline);
                 padding-block: 0.875rem;
-                padding-inline: 1.75rem;
+                padding-inline: 1.5rem;
                 text-align: start;
-                font-weight: 600;
-            }
-
-            .directory-table thead th:not(:last-child) {
-                border-inline-end: 1px solid var(--border-hairline);
+                font-weight: 700;
             }
 
             .directory-table tbody th,
             .directory-table tbody td {
-                padding-block: 1.125rem;
-                padding-inline: 1.75rem;
+                padding-block: 1.0625rem;
+                padding-inline: 1.5rem;
                 vertical-align: middle;
                 text-align: start;
-                transition: background-color 0.15s ease;
+                transition: background-color 150ms ease;
             }
 
             .directory-table tbody tr:not(:last-child) :where(th, td) {
                 border-block-end: 1px solid var(--border-hairline);
             }
 
-            .directory-table tbody :where(th, td):not(:last-child) {
-                border-inline-end: 1px solid var(--border-hairline);
-            }
-
             .directory-table tbody td:last-child {
                 text-align: end;
-            }
-
-            .directory-table tbody tr:hover :where(th, td) {
-                background-color: var(--cobalt-tint);
             }
 
             .dir-platform {
@@ -874,14 +1043,16 @@
 
             .btn-small {
                 background-color: var(--bg-surface);
-                border: 1px solid var(--border-heavy);
-                min-block-size: 2rem;
-                min-inline-size: 2rem;
-                padding-block: 0.375rem;
+                border: 1px solid var(--border-strong);
+                border-radius: var(--radius-sm);
+                min-block-size: 2.125rem;
+                min-inline-size: 2.125rem;
+                padding-block: 0.4375rem;
                 padding-inline: 0.875rem;
                 font-family: var(--font-mono);
                 font-size: 0.6875rem;
                 font-weight: 700;
+                letter-spacing: 0.02em;
                 color: var(--ink-primary);
                 cursor: pointer;
                 text-decoration: none;
@@ -889,7 +1060,11 @@
                 align-items: center;
                 justify-content: center;
                 gap: 0.375rem;
-                transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, scale 0.15s ease-out;
+                transition:
+                    background-color 150ms ease,
+                    border-color 150ms ease,
+                    color 150ms ease,
+                    transform 140ms var(--ease-out);
             }
 
             @media (pointer: coarse) {
@@ -900,12 +1075,6 @@
                 }
             }
 
-            .btn-small:hover:not(:disabled) {
-                background-color: var(--cobalt-fill);
-                border-color: var(--cobalt-fill);
-                color: var(--on-cobalt);
-            }
-
             .btn-small.blue-fill,
             .btn-small[data-copied] {
                 background-color: var(--cobalt-fill);
@@ -913,15 +1082,51 @@
                 color: var(--on-cobalt);
             }
 
-            .btn-small.blue-fill:hover:not(:disabled) {
-                background-color: var(--cobalt-fill-hover);
-                border-color: var(--cobalt-fill-hover);
-            }
-
             .btn-small[data-failed] {
                 background-color: var(--ink-primary);
                 border-color: var(--ink-primary);
                 color: var(--bg-surface);
+            }
+
+            /* Blur-masked crossfade inside copy buttons (zero width shift) */
+            .copy-swap {
+                display: inline-grid;
+                place-items: center;
+            }
+
+            .copy-swap > span {
+                grid-area: 1 / 1;
+                transition:
+                    opacity 180ms var(--ease-out),
+                    transform 180ms var(--ease-out),
+                    filter 180ms ease;
+            }
+
+            .copy-label-copied {
+                opacity: 0;
+                transform: scale(0.94);
+                filter: blur(2px);
+                pointer-events: none;
+            }
+
+            .btn-small[data-copied] .copy-label-default {
+                opacity: 0;
+                transform: scale(0.94);
+                filter: blur(2px);
+            }
+
+            .btn-small[data-copied] .copy-label-copied {
+                opacity: 1;
+                transform: scale(1);
+                filter: blur(0);
+            }
+
+            @media (prefers-reduced-motion: reduce) {
+                .copy-label-copied,
+                .btn-small[data-copied] .copy-label-default {
+                    transform: none;
+                    filter: none;
+                }
             }
 
             @container directory-table (width < 42rem) {
@@ -943,13 +1148,12 @@
                 }
 
                 .directory-table tbody tr :where(th, td) {
-                    border-inline-end: none;
                     border-block-end: none;
-                    padding-inline: 1.5rem;
+                    padding-inline: 1.25rem;
                 }
 
                 .directory-table tbody th.dir-platform {
-                    background-color: var(--bg-paper);
+                    background-color: var(--bg-subtle);
                     border-block-end: 1px solid var(--border-hairline);
                     padding-block: 0.75rem;
                     font-family: var(--font-mono);
@@ -975,7 +1179,7 @@
                     font-family: var(--font-mono);
                     font-size: 0.6875rem;
                     text-transform: uppercase;
-                    letter-spacing: 0.05em;
+                    letter-spacing: 0.06em;
                     color: var(--ink-muted);
                     margin-block-end: 0.25rem;
                 }
@@ -986,7 +1190,7 @@
                     font-family: var(--font-mono);
                     font-size: 0.6875rem;
                     text-transform: uppercase;
-                    letter-spacing: 0.05em;
+                    letter-spacing: 0.06em;
                     color: var(--ink-muted);
                     margin-block-end: 0.5rem;
                 }
@@ -998,15 +1202,16 @@
 
             /* Contact Banner */
             .contact-banner h3 {
-                font-size: 1.5rem;
+                font-size: clamp(1.3rem, 1.15rem + 0.5vw, 1.55rem);
                 font-weight: 700;
-                letter-spacing: -0.02em;
+                letter-spacing: -0.025em;
+                line-height: 1.2;
                 margin-block-end: 0.375rem;
             }
 
             .contact-banner p {
                 color: var(--on-cobalt-muted);
-                font-size: 0.95rem;
+                font-size: 0.96875rem;
             }
 
             .btn-banner {
@@ -1014,11 +1219,12 @@
                 align-items: center;
                 justify-content: center;
                 gap: 0.5rem;
-                min-block-size: 2.75rem;
+                min-block-size: 2.875rem;
                 background-color: var(--banner-btn-bg);
                 color: var(--banner-btn-ink);
                 padding-block: 0.875rem;
                 padding-inline: 1.5rem;
+                border-radius: var(--radius-sm);
                 font-family: var(--font-mono);
                 font-size: 0.75rem;
                 font-weight: 700;
@@ -1026,13 +1232,11 @@
                 text-transform: uppercase;
                 letter-spacing: 0.05em;
                 border: 1px solid transparent;
-                box-shadow: 0 2px 4px rgb(0 0 0 / 0.12);
-                transition: background-color 0.15s ease, color 0.15s ease, scale 0.15s ease-out;
-            }
-
-            .btn-banner:hover {
-                background-color: var(--banner-btn-hover-bg);
-                color: var(--banner-btn-hover-ink);
+                box-shadow: 0 2px 6px rgb(0 0 0 / 0.14);
+                transition:
+                    background-color 150ms ease,
+                    color 150ms ease,
+                    transform 140ms var(--ease-out);
             }
 
             .btn-banner:focus-visible {
@@ -1042,50 +1246,48 @@
 
             /* Footer Links */
             footer a {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.25rem;
                 color: var(--cobalt);
                 text-decoration: none;
                 font-weight: 700;
+                padding-block: 0.25rem;
             }
 
-            footer a:hover {
-                text-decoration: underline;
-                text-decoration-thickness: 2px;
-                text-underline-offset: 2px;
-            }
-
-            /* Top-Layer Toast Notification */
+            /* Top-Layer Swipeable Toast Notification */
             .toast {
                 position: fixed;
                 inset-block-start: auto;
                 inset-inline-start: auto;
-                inset-block-end: 1.5rem;
-                inset-inline-end: 1.5rem;
+                inset-block-end: max(1.25rem, env(safe-area-inset-bottom, 0px));
+                inset-inline-end: max(1.25rem, env(safe-area-inset-right, 0px));
                 margin: 0;
-                max-inline-size: calc(100vw - 3rem);
-                max-inline-size: calc(100dvi - 3rem);
+                max-inline-size: calc(100vw - 2.5rem);
+                max-inline-size: calc(100dvi - 2.5rem);
                 background-color: var(--toast-bg);
                 color: var(--toast-ink);
                 padding-block: 0.75rem;
-                padding-inline: 1.25rem 0.75rem;
+                padding-inline: 1.125rem 0.625rem;
                 font-family: var(--font-mono);
                 font-size: 0.75rem;
-                border: 1px solid var(--border-hairline);
-                border-inline-start: 4px solid var(--cobalt-fill);
+                border: 1px solid var(--toast-border);
+                border-inline-start: 3px solid var(--cobalt-fill);
+                border-radius: var(--radius-md);
                 align-items: center;
                 gap: 0.75rem;
-                box-shadow: 0 4px 14px rgb(0 0 0 / 0.2);
+                box-shadow: var(--shadow-toast);
+                touch-action: pan-x;
                 opacity: 0;
-                transition-property: opacity, translate, display, overlay;
-                transition-duration: 0.2s;
-                transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+                transform: translateY(100%) scale(0.96);
+                transition-property: opacity, transform, display, overlay;
+                transition-duration: 200ms;
+                transition-timing-function: var(--ease-out);
                 transition-behavior: allow-discrete;
 
-                @media (prefers-reduced-motion: no-preference) {
-                    translate: 0 1.25rem;
-                }
-
                 @media (prefers-reduced-motion: reduce) {
-                    transition-duration: 0.1s;
+                    transform: none;
+                    transition-duration: 120ms;
                 }
             }
 
@@ -1095,37 +1297,43 @@
 
             .toast:is(:popover-open, .\:popover-open):where(:not([data-closing])) {
                 opacity: 1;
+                transform: translateY(0) scale(1);
+                transition-duration: 320ms;
 
                 @starting-style {
                     opacity: 0;
+                    transform: translateY(100%) scale(0.96);
                 }
 
-                @media (prefers-reduced-motion: no-preference) {
-                    translate: 0 0;
+                @media (prefers-reduced-motion: reduce) {
+                    transform: none;
+                    transition-duration: 150ms;
 
                     @starting-style {
-                        translate: 0 1.25rem;
+                        opacity: 0;
+                        transform: none;
                     }
                 }
             }
 
+            .toast[data-dragging] {
+                transition: none;
+                cursor: grabbing;
+            }
+
             .toast-close {
-                min-inline-size: 1.75rem;
-                min-block-size: 1.75rem;
+                min-inline-size: 2rem;
+                min-block-size: 2rem;
+                border-radius: var(--radius-xs);
                 display: inline-flex;
                 align-items: center;
                 justify-content: center;
                 color: inherit;
-                opacity: 0.8;
+                opacity: 0.78;
                 cursor: pointer;
                 font-size: 1rem;
                 line-height: 1;
-                transition: opacity 0.15s ease, background-color 0.15s ease;
-            }
-
-            .toast-close:hover {
-                opacity: 1;
-                background-color: rgb(255 255 255 / 0.12);
+                transition: opacity 150ms ease, background-color 150ms ease, transform 140ms var(--ease-out);
             }
 
             .toast-close:focus-visible {
@@ -1134,20 +1342,105 @@
                 opacity: 1;
             }
 
-            @container page (width < 55rem) {
-                .section-header {
-                    padding-block: 1rem;
-                    padding-inline: 1.5rem;
+            /* Capability-gated hover states (zero sticky hovers on touch devices) */
+            @media (hover: hover) and (pointer: fine) {
+                .topbar-nav a:hover {
+                    color: var(--cobalt);
+                    background-color: var(--cobalt-tint);
                 }
 
-                .interest-card {
-                    padding-block: 2rem;
-                    padding-inline: 1.5rem;
-                    border-inline-end: none;
+                .btn-primary:hover {
+                    background-color: var(--cobalt-fill-hover);
+                    border-color: var(--cobalt-fill-hover);
                 }
 
-                .interest-card:not(:last-child) {
-                    border-block-end: 1px solid var(--border-hairline);
+                .btn-primary:hover .btn-arrow {
+                    transform: translateX(3px);
+                }
+
+                .btn-outline:hover {
+                    border-color: var(--cobalt);
+                    color: var(--cobalt);
+                    background-color: var(--cobalt-tint);
+                }
+
+                .btn-outline:hover .btn-arrow {
+                    transform: translateY(2px);
+                }
+
+                .facts-table tr:hover {
+                    background-color: var(--cobalt-tint);
+                }
+
+                .fact-val a:hover {
+                    text-decoration: underline;
+                    text-decoration-thickness: 2px;
+                    text-underline-offset: 3px;
+                }
+
+                .fact-val a:hover .btn-arrow {
+                    transform: translate(2px, -2px);
+                }
+
+                .interest-card:hover {
+                    border-color: var(--cobalt-border);
+                    transform: translateY(-2px);
+                }
+
+                .interest-card:hover .interest-title {
+                    color: var(--cobalt);
+                }
+
+                .interest-card:hover .interest-icon {
+                    background-color: var(--cobalt-tint-strong);
+                    transform: scale(1.04);
+                }
+
+                .directory-table tbody tr:hover :where(th, td) {
+                    background-color: var(--cobalt-tint);
+                }
+
+                .btn-small:hover:not(:disabled):not([data-copied]):not([data-failed]) {
+                    background-color: var(--cobalt-fill);
+                    border-color: var(--cobalt-fill);
+                    color: var(--on-cobalt);
+                }
+
+                .btn-small.blue-fill:hover:not(:disabled) {
+                    background-color: var(--cobalt-fill-hover);
+                    border-color: var(--cobalt-fill-hover);
+                }
+
+                .btn-small:hover .btn-arrow {
+                    transform: translate(2px, -2px);
+                }
+
+                .btn-small.blue-fill:hover .btn-arrow {
+                    transform: translateX(3px);
+                }
+
+                .btn-banner:hover {
+                    background-color: var(--banner-btn-hover-bg);
+                    color: var(--banner-btn-hover-ink);
+                }
+
+                .btn-banner:hover .btn-arrow {
+                    transform: translateX(3px);
+                }
+
+                footer a:hover {
+                    text-decoration: underline;
+                    text-decoration-thickness: 2px;
+                    text-underline-offset: 3px;
+                }
+
+                footer a:hover .btn-arrow {
+                    transform: translateY(-2px);
+                }
+
+                .toast-close:hover {
+                    opacity: 1;
+                    background-color: rgb(255 255 255 / 0.14);
                 }
             }
 
@@ -1162,6 +1455,11 @@
                     box-shadow: none;
                 }
 
+                .hero-right,
+                .about-grid,
+                .interest-card,
+                .table-card,
+                .contact-banner,
                 .btn-primary,
                 .btn-outline,
                 .btn-small,
@@ -1172,6 +1470,82 @@
                 .blue-callout,
                 .toast {
                     border: 1px solid CanvasText;
+                    box-shadow: none;
+                }
+            }
+        }
+
+        @layer motion {
+            /* Choreographed one-shot hero entrance (Lead -> Support wave, Decoration fades in place) */
+            @keyframes hero-lead-in {
+                from {
+                    opacity: 0;
+                    transform: translateY(14px);
+                }
+            }
+
+            @keyframes hero-support-in {
+                from {
+                    opacity: 0;
+                    transform: translateY(8px);
+                }
+            }
+
+            @keyframes hero-fade-in {
+                from {
+                    opacity: 0;
+                }
+            }
+
+            @media (prefers-reduced-motion: no-preference) {
+                .tag-pill {
+                    animation: hero-fade-in 380ms var(--ease-out) both;
+                }
+
+                .hero-title {
+                    animation: hero-lead-in 520ms var(--ease-out) both;
+                }
+
+                .hero-intro {
+                    animation: hero-support-in 480ms var(--ease-out) 70ms both;
+                }
+
+                .hero-actions {
+                    animation: hero-support-in 440ms var(--ease-out) 125ms both;
+                }
+
+                .hero-right {
+                    animation: hero-support-in 480ms var(--ease-out) 165ms both;
+                }
+
+                /* Progressive-enhancement scroll reveal for below-the-fold sections (compositor-only, entry-only) */
+                @supports ((animation-timeline: view()) and (animation-range: entry)) {
+                    @keyframes section-reveal {
+                        from {
+                            opacity: 0;
+                            transform: translateY(14px);
+                        }
+                        to {
+                            opacity: 1;
+                            transform: translateY(0);
+                        }
+                    }
+
+                    .content-section {
+                        animation: section-reveal auto linear both;
+                        animation-timeline: view();
+                        animation-range: entry 0% entry 28%;
+                    }
+                }
+            }
+
+            @media (prefers-reduced-motion: reduce) {
+                .tag-pill,
+                .hero-title,
+                .hero-intro,
+                .hero-actions,
+                .hero-right {
+                    animation: hero-fade-in 220ms ease both;
                 }
             }
         }
@@ -1193,22 +1567,27 @@
 </head>
 <body>
 
-    <!-- Top Status Bar -->
+    <!-- Sticky Translucent Top Bar -->
     <header class="topbar">
         <div class="topbar-inner">
-            <div class="topbar-cell">
+            <a href="#" class="topbar-identity">
                 <span class="status-dot" aria-hidden="true"></span>
                 <span class="topbar-brand">Justin Smith</span>
-                <span>/ Personal Site</span>
-            </div>
-            <div class="topbar-cell">
-                <span>California, USA</span>
-            </div>
-            <div class="topbar-cell">
+                <span class="topbar-sub">/ Personal Site</span>
+            </a>
+
+            <nav class="topbar-nav" aria-label="Section navigation">
+                <a href="#about">About</a>
+                <a href="#interests">Hobbies</a>
+                <a href="#contact">Contact</a>
+            </nav>
+
+            <div class="topbar-meta">
+                <span class="topbar-location">California, USA</span>
+                <span class="topbar-divider topbar-divider-hide" aria-hidden="true"></span>
                 <time id="liveClock" class="topbar-clock">00:00:00 PST</time>
-            </div>
-            <div class="topbar-cell">
-                <span>2026</span>
+                <span class="topbar-divider topbar-divider-hide" aria-hidden="true"></span>
+                <span class="topbar-year">2026</span>
             </div>
         </div>
     </header>
@@ -1226,8 +1605,8 @@
                         </p>
                     </div>
                     <div class="hero-actions">
-                        <a href="#contact" class="btn-primary">Get In Touch <span aria-hidden="true">&rarr;</span></a>
-                        <a href="#about" class="btn-outline">About Me <span aria-hidden="true">&darr;</span></a>
+                        <a href="#contact" class="btn-primary">Get In Touch <span class="btn-arrow" aria-hidden="true">&rarr;</span></a>
+                        <a href="#about" class="btn-outline">About Me <span class="btn-arrow" aria-hidden="true">&darr;</span></a>
                     </div>
                 </div>
 
@@ -1262,11 +1641,11 @@
                             </tr>
                             <tr>
                                 <th scope="row" id="fact-github-key" class="fact-key">GitHub</th>
-                                <td class="fact-val"><a id="fact-github-link" href="https://github.com/1juicytree" target="_blank" rel="noopener noreferrer" aria-labelledby="fact-github-link fact-github-key">@1juicytree <span aria-hidden="true">&nearr;</span></a></td>
+                                <td class="fact-val"><a id="fact-github-link" href="https://github.com/1juicytree" target="_blank" rel="noopener noreferrer" aria-labelledby="fact-github-link fact-github-key">@1juicytree <span class="btn-arrow" aria-hidden="true">&nearr;</span></a></td>
                             </tr>
                             <tr>
                                 <th scope="row" id="fact-twitter-key" class="fact-key">Twitter / X</th>
-                                <td class="fact-val"><a id="fact-twitter-link" href="https://twitter.com/1juicytree" target="_blank" rel="noopener noreferrer" aria-labelledby="fact-twitter-link fact-twitter-key">@1juicytree <span aria-hidden="true">&nearr;</span></a></td>
+                                <td class="fact-val"><a id="fact-twitter-link" href="https://twitter.com/1juicytree" target="_blank" rel="noopener noreferrer" aria-labelledby="fact-twitter-link fact-twitter-key">@1juicytree <span class="btn-arrow" aria-hidden="true">&nearr;</span></a></td>
                             </tr>
                         </tbody>
                     </table>
@@ -1274,10 +1653,11 @@
             </section>
 
             <!-- Section 01: About Me -->
-            <section>
+            <section class="content-section">
                 <div class="section-header" id="about">
-                    <h2 class="section-header-title">About Me</h2>
                     <span class="section-header-num" aria-hidden="true">01</span>
+                    <h2 class="section-header-title">About Me</h2>
+                    <span class="section-header-rule" aria-hidden="true"></span>
                 </div>
 
                 <div class="about-grid">
@@ -1304,10 +1684,11 @@
             </section>
 
             <!-- Section 02: Hobbies & Interests -->
-            <section>
+            <section class="content-section">
                 <div class="section-header" id="interests">
-                    <h2 class="section-header-title">Hobbies & What I Do</h2>
                     <span class="section-header-num" aria-hidden="true">02</span>
+                    <h2 class="section-header-title">Hobbies & What I Do</h2>
+                    <span class="section-header-rule" aria-hidden="true"></span>
                 </div>
 
                 <div class="interests-grid">
@@ -1390,88 +1771,108 @@
             </section>
 
             <!-- Section 03: Contact Directory -->
-            <section>
+            <section class="content-section">
                 <div class="section-header" id="contact">
-                    <h2 id="contact-heading" class="section-header-title">Connect & Contact Info</h2>
                     <span class="section-header-num" aria-hidden="true">03</span>
+                    <h2 id="contact-heading" class="section-header-title">Connect & Contact Info</h2>
+                    <span class="section-header-rule" aria-hidden="true"></span>
                 </div>
 
-                <div class="table-wrapper" tabindex="0" role="region" aria-labelledby="contact-heading">
-                    <table class="directory-table">
-                        <caption class="visually-hidden">Connect & Contact Info</caption>
-                        <colgroup>
-                            <col class="col-platform">
-                            <col class="col-details">
-                            <col class="col-action">
-                        </colgroup>
-                        <thead>
-                            <tr>
-                                <th scope="col">Platform</th>
-                                <th scope="col">Details</th>
-                                <th scope="col">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row" id="dir-email" class="dir-platform">Email</th>
-                                <td id="contact-email" class="dir-handle">1justin.josephsmith@gmail.com</td>
-                                <td>
-                                    <div class="dir-actions">
-                                        <button type="button" id="copy-email" class="btn-small" command="--copy" commandfor="contact-email" data-copy-label="Email" aria-labelledby="copy-email dir-email">Copy</button>
-                                        <a href="mailto:1justin.josephsmith@gmail.com" class="btn-small blue-fill">Send Email <span aria-hidden="true">&rarr;</span></a>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row" id="dir-phone" class="dir-platform">Phone</th>
-                                <td id="contact-phone" class="dir-handle">(559) 223-8292</td>
-                                <td>
-                                    <div class="dir-actions">
-                                        <button type="button" class="btn-small" command="--copy" commandfor="contact-phone" data-copy-label="Phone">Copy Phone</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row" id="dir-discord" class="dir-platform">Discord</th>
-                                <td id="contact-discord" class="dir-handle">1juicytree</td>
-                                <td>
-                                    <div class="dir-actions">
-                                        <button type="button" class="btn-small" command="--copy" commandfor="contact-discord" data-copy-label="Discord">Copy Tag</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row" id="dir-github" class="dir-platform">GitHub</th>
-                                <td class="dir-handle">github.com/1juicytree</td>
-                                <td>
-                                    <div class="dir-actions">
-                                        <a id="visit-github" href="https://github.com/1juicytree" target="_blank" rel="noopener noreferrer" class="btn-small" aria-labelledby="visit-github dir-github">Visit Profile <span aria-hidden="true">&nearr;</span></a>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row" id="dir-twitter" class="dir-platform">Twitter / X</th>
-                                <td class="dir-handle">twitter.com/1juicytree (@1juicytree)</td>
-                                <td>
-                                    <div class="dir-actions">
-                                        <a id="visit-twitter" href="https://twitter.com/1juicytree" target="_blank" rel="noopener noreferrer" class="btn-small" aria-labelledby="visit-twitter dir-twitter">Visit Profile <span aria-hidden="true">&nearr;</span></a>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <!-- Vibrant Blue Contact Banner -->
-                <div class="contact-banner">
-                    <div>
-                        <h3>Want to chat or collaborate?</h3>
-                        <p>Feel free to reach out if you want to talk about tech, team up in a game, or just say hello.</p>
+                <div class="contact-stack">
+                    <div class="table-card">
+                        <div class="table-wrapper" tabindex="0" role="region" aria-labelledby="contact-heading">
+                            <table class="directory-table">
+                                <caption class="visually-hidden">Connect & Contact Info</caption>
+                                <colgroup>
+                                    <col class="col-platform">
+                                    <col class="col-details">
+                                    <col class="col-action">
+                                </colgroup>
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Platform</th>
+                                        <th scope="col">Details</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row" id="dir-email" class="dir-platform">Email</th>
+                                        <td id="contact-email" class="dir-handle">1justin.josephsmith@gmail.com</td>
+                                        <td>
+                                            <div class="dir-actions">
+                                                <button type="button" id="copy-email" class="btn-small" command="--copy" commandfor="contact-email" data-copy-label="Email" aria-labelledby="copy-email dir-email">
+                                                    <span class="copy-swap">
+                                                        <span class="copy-label-default">Copy</span>
+                                                        <span class="copy-label-copied" aria-hidden="true">Copied! ✓</span>
+                                                    </span>
+                                                </button>
+                                                <a href="mailto:1justin.josephsmith@gmail.com" class="btn-small blue-fill">Send Email <span class="btn-arrow" aria-hidden="true">&rarr;</span></a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" id="dir-phone" class="dir-platform">Phone</th>
+                                        <td id="contact-phone" class="dir-handle">(559) 223-8292</td>
+                                        <td>
+                                            <div class="dir-actions">
+                                                <button type="button" class="btn-small" command="--copy" commandfor="contact-phone" data-copy-label="Phone">
+                                                    <span class="copy-swap">
+                                                        <span class="copy-label-default">Copy Phone</span>
+                                                        <span class="copy-label-copied" aria-hidden="true">Copied! ✓</span>
+                                                    </span>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" id="dir-discord" class="dir-platform">Discord</th>
+                                        <td id="contact-discord" class="dir-handle">1juicytree</td>
+                                        <td>
+                                            <div class="dir-actions">
+                                                <button type="button" class="btn-small" command="--copy" commandfor="contact-discord" data-copy-label="Discord">
+                                                    <span class="copy-swap">
+                                                        <span class="copy-label-default">Copy Tag</span>
+                                                        <span class="copy-label-copied" aria-hidden="true">Copied! ✓</span>
+                                                    </span>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" id="dir-github" class="dir-platform">GitHub</th>
+                                        <td class="dir-handle">github.com/1juicytree</td>
+                                        <td>
+                                            <div class="dir-actions">
+                                                <a id="visit-github" href="https://github.com/1juicytree" target="_blank" rel="noopener noreferrer" class="btn-small" aria-labelledby="visit-github dir-github">Visit Profile <span class="btn-arrow" aria-hidden="true">&nearr;</span></a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" id="dir-twitter" class="dir-platform">Twitter / X</th>
+                                        <td class="dir-handle">twitter.com/1juicytree (@1juicytree)</td>
+                                        <td>
+                                            <div class="dir-actions">
+                                                <a id="visit-twitter" href="https://twitter.com/1juicytree" target="_blank" rel="noopener noreferrer" class="btn-small" aria-labelledby="visit-twitter dir-twitter">Visit Profile <span class="btn-arrow" aria-hidden="true">&nearr;</span></a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                    <div>
-                        <a href="mailto:1justin.josephsmith@gmail.com?subject=Hello%20Justin!" class="btn-banner">
-                            Drop Me an Email <span aria-hidden="true">&rarr;</span>
-                        </a>
+
+                    <!-- Vibrant Blue Contact Banner -->
+                    <div class="contact-banner">
+                        <div>
+                            <h3>Want to chat or collaborate?</h3>
+                            <p>Feel free to reach out if you want to talk about tech, team up in a game, or just say hello.</p>
+                        </div>
+                        <div>
+                            <a href="mailto:1justin.josephsmith@gmail.com?subject=Hello%20Justin!" class="btn-banner">
+                                Drop Me an Email <span class="btn-arrow" aria-hidden="true">&rarr;</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -1480,7 +1881,7 @@
         <!-- Footer -->
         <footer>
             <div>&copy; 2026 Justin Smith <span aria-hidden="true">&bull;</span> Built with HTML & CSS</div>
-            <div><a href="#">Back to top <span aria-hidden="true">&uarr;</span></a></div>
+            <div><a href="#">Back to top <span class="btn-arrow" aria-hidden="true">&uarr;</span></a></div>
         </footer>
     </div>
 
@@ -1579,21 +1980,31 @@
             }, 3000);
         }
 
-        // Top-layer Popover Toast Management
+        // Top-layer Popover Toast Management with swipe-to-dismiss & pause-on-hidden/hover
         const toast = document.getElementById('toast');
         const toastMessage = document.getElementById('toastMessage');
         const toastCloseBtn = toast?.querySelector('.toast-close');
         let toastTimer = null;
         let lastToastTrigger = null;
+        let isToastHovered = false;
+        let activeDragPointerId = null;
 
         function isToastOpen() {
             if (!toast) return false;
             return toast.matches(':is(:popover-open, .\\:popover-open)');
         }
 
+        function resetToastDragStyles() {
+            if (!toast) return;
+            toast.removeAttribute('data-dragging');
+            toast.style.transform = '';
+            toast.style.opacity = '';
+        }
+
         function openToastPopover() {
             if (!toast) return;
             toast.removeAttribute('data-closing');
+            resetToastDragStyles();
             if (typeof toast.showPopover === 'function') {
                 if (!isToastOpen()) toast.showPopover();
             } else {
@@ -1624,6 +2035,7 @@
             } else {
                 toast.classList.remove(':popover-open');
             }
+            resetToastDragStyles();
 
             if (restoreFocus && hadFocus && lastToastTrigger?.isConnected) {
                 lastToastTrigger.focus();
@@ -1632,10 +2044,11 @@
 
         function scheduleToastDismiss() {
             clearTimeout(toastTimer);
+            if (document.hidden || isToastHovered || activeDragPointerId !== null) return;
             toastTimer = setTimeout(() => {
-                if (toast?.contains(document.activeElement)) return;
+                if (toast?.contains(document.activeElement) || isToastHovered || activeDragPointerId !== null) return;
                 hideToastPopover();
-            }, 2400);
+            }, 2600);
         }
 
         function showToast(msg, trigger) {
@@ -1646,6 +2059,16 @@
             announce(msg);
             scheduleToastDismiss();
         }
+
+        // Pause toast timer while tab is hidden (Sonner edge-case discipline)
+        document.addEventListener('visibilitychange', () => {
+            if (!isToastOpen()) return;
+            if (document.hidden) {
+                clearTimeout(toastTimer);
+            } else {
+                scheduleToastDismiss();
+            }
+        });
 
         let toastHadFocusBeforeClose = false;
         toast?.addEventListener('focusin', () => {
@@ -1658,9 +2081,24 @@
                 if (isToastOpen()) scheduleToastDismiss();
             }
         });
+        toast?.addEventListener('pointerenter', (event) => {
+            if (event.pointerType === 'mouse') {
+                isToastHovered = true;
+                clearTimeout(toastTimer);
+            }
+        });
+        toast?.addEventListener('pointerleave', (event) => {
+            if (event.pointerType === 'mouse') {
+                isToastHovered = false;
+                if (isToastOpen()) scheduleToastDismiss();
+            }
+        });
         toast?.addEventListener('toggle', (event) => {
             if (event.newState === 'closed') {
                 clearTimeout(toastTimer);
+                isToastHovered = false;
+                activeDragPointerId = null;
+                resetToastDragStyles();
                 if (toastHadFocusBeforeClose && lastToastTrigger?.isConnected) {
                     toastHadFocusBeforeClose = false;
                     lastToastTrigger.focus();
@@ -1674,9 +2112,82 @@
             }
         });
 
+        // 1:1 Pointer Events swipe-down-to-dismiss on toast (Apple rubber-band + velocity threshold)
+        function rubberband(overshoot, dimension, constant = 0.55) {
+            return (overshoot * dimension * constant) / (dimension + constant * Math.abs(overshoot));
+        }
+
+        let dragStartY = 0;
+        let dragStartTime = 0;
+        let currentDeltaY = 0;
+
+        toast?.addEventListener('pointerdown', (event) => {
+            if (event.target.closest('.toast-close')) return;
+            if (activeDragPointerId !== null) return; // Multi-touch protection
+            activeDragPointerId = event.pointerId;
+            dragStartY = event.clientY;
+            dragStartTime = performance.now();
+            currentDeltaY = 0;
+            clearTimeout(toastTimer);
+            toast.setPointerCapture(event.pointerId);
+            toast.setAttribute('data-dragging', '');
+        });
+
+        toast?.addEventListener('pointermove', (event) => {
+            if (event.pointerId !== activeDragPointerId) return;
+            const rawDelta = event.clientY - dragStartY;
+            const height = toast.offsetHeight || 48;
+            currentDeltaY = rawDelta < 0 ? rubberband(rawDelta, height * 1.5, 0.35) : rawDelta;
+            toast.style.transform = `translateY(${currentDeltaY}px)`;
+            if (currentDeltaY > 0) {
+                toast.style.opacity = String(Math.max(0.25, 1 - currentDeltaY / (height * 2.4)));
+            }
+        });
+
+        async function finishToastDrag(event) {
+            if (event.pointerId !== activeDragPointerId) return;
+            activeDragPointerId = null;
+            if (toast.hasPointerCapture(event.pointerId)) {
+                toast.releasePointerCapture(event.pointerId);
+            }
+            const elapsed = Math.max(1, performance.now() - dragStartTime);
+            const velocity = currentDeltaY / elapsed; // px/ms
+
+            toast.removeAttribute('data-dragging');
+
+            if (currentDeltaY >= 36 || velocity > 0.11) {
+                const startY = currentDeltaY;
+                const startOpacity = parseFloat(toast.style.opacity || '1');
+                const exitAnim = toast.animate(
+                    [
+                        { transform: `translateY(${startY}px)`, opacity: startOpacity },
+                        { transform: 'translateY(100%)', opacity: 0 },
+                    ],
+                    { duration: 180, easing: 'cubic-bezier(0.23, 1, 0.32, 1)', fill: 'forwards' }
+                );
+                try {
+                    await exitAnim.finished;
+                } catch {}
+                if (typeof toast.hidePopover === 'function') {
+                    if (isToastOpen()) toast.hidePopover();
+                } else {
+                    toast.classList.remove(':popover-open');
+                }
+                exitAnim.cancel();
+                resetToastDragStyles();
+            } else {
+                // Smooth snap back to resting position
+                toast.style.transform = '';
+                toast.style.opacity = '';
+                scheduleToastDismiss();
+            }
+        }
+
+        toast?.addEventListener('pointerup', finishToastDrag);
+        toast?.addEventListener('pointercancel', finishToastDrag);
+
         // Copy Button Logic (Invoker Commands + Async Clipboard + Fallback)
         const buttonTimers = new WeakMap();
-        const buttonOriginalLabels = new WeakMap();
 
         function legacyCopy(text) {
             const field = Object.assign(document.createElement('textarea'), { value: text });
@@ -1693,10 +2204,6 @@
 
         function reportCopy(button, ok, label, text) {
             clearTimeout(buttonTimers.get(button));
-            if (!buttonOriginalLabels.has(button)) {
-                buttonOriginalLabels.set(button, button.textContent);
-            }
-            const originalLabel = buttonOriginalLabels.get(button);
 
             button.removeAttribute('data-copied');
             button.removeAttribute('data-failed');
@@ -1704,7 +2211,6 @@
 
             if (ok) {
                 button.setAttribute('data-copied', '');
-                button.textContent = 'Copied! ✓';
                 showToast(`Copied ${label}: ${text}`, button);
             } else {
                 button.setAttribute('data-failed', '');
@@ -1714,8 +2220,7 @@
             buttonTimers.set(button, setTimeout(() => {
                 button.removeAttribute('data-copied');
                 button.removeAttribute('data-failed');
-                button.textContent = originalLabel;
-            }, 1400));
+            }, 1500));
         }
 
         async function copyFromTarget(button, target) {
